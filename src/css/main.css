@@ -88,11 +88,21 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+textarea {
+    border: 1px solid blue;
+    width: 100%;
+    min-height: 4em;
+}
 
+.correct {
+    border: 1px solid green;
+    background-color: rgba(178, 204, 176, 1);
+}
 
-
-
-
+.wrong {
+    border: 1px solid red;
+    background-color: rgba(225, 187, 192, 1);
+}
 
 
 
