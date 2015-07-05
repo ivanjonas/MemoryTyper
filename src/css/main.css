@@ -104,7 +104,10 @@ textarea {
     background-color: rgba(225, 187, 192, 1);
 }
 
-
+body {
+    max-width: 960px;
+    margin: 0 auto;
+}
 
 
 
