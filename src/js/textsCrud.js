@@ -1,15 +1,16 @@
 var app = app || {};
 app.textsCrud = {
     loadText: function(textObj) {
+        app.typingMechanics1.textObj = textObj;
         $(".text").text(textObj.text).fixHeight();
         $(".go").removeAttr("disabled").show();
     },
+    /**
+     * populate the list with Texts. Runs once on page load.
+     */
     load: function() {
-        /**
-         * populate the list with Texts. Runs once on page load.
-         */
         var texts = JSON.parse(window.localStorage.getItem("texts")); // an array of textObjects
-        var userTexts = $("#user-texts ul").empty(); // DOM el
+        var userTexts = $("#user-texts").find("ul").empty(); // DOM el
         if (texts === undefined) { return; }
         texts.forEach(function(el, idx, arr) {
             var li = $("<li>");

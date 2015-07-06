@@ -88,6 +88,12 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+/* sidebar */
+#user-texts li {
+    cursor: pointer;
+}
+
+/* typing area */
 textarea {
     border: 1px solid blue;
     width: 100%;
