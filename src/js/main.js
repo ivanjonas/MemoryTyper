@@ -11,6 +11,18 @@
 })(jQuery);
 
 // main code
+function TextObj(title, text, tags) {
+    this.id = getNextAutoIncrement();
+    this.text = text;
+    this.title = title;
+    this.tags = tags;
+}
+function getNextAutoIncrement() {
+    var nextId = parseInt(localStorage.getItem("textAutoIncrement") || 1);
+    localStorage.setItem("textAutoIncrement", nextId + 1);
+    return nextId;
+}
+
 $(function() {
     app.textsCrud.load();
     $(".text").fixHeight();
@@ -21,6 +33,12 @@ $(function() {
         $(e.target).hide();
         $(".text").toggle();
         $(".output").focus();
+    });
+
+    $(document).on("click", "#add-text-submit", function(e) {
+        var newTextObj = new TextObj($("#text-add-title").val(), $("#text-add-text").val());
+        app.textsCrud.saveText(newTextObj);
+
     });
 
     //$(document).on("change", ".text", function(e) {

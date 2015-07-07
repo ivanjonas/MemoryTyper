@@ -53,7 +53,7 @@ app.typingMechanics1 = {
             .data("end", end);
 
         // calculate wpm
-        var wordCount = text.split(" ").length,
+        var wordCount = app.typingMechanics1.textObj.text.split(" ").length, // FIXME there may be big problems here considering autopunctuation, etc.
             wpm = Math.round((wordCount / duration * 100000 * 60)) / 100;
 
         $(".results").text(wordCount + " words in " + (duration / 1000) + " seconds. " + wpm + " words per minute.")
