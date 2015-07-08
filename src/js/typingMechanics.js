@@ -7,7 +7,7 @@ app.typingMechanics1 = {
     output: $(".output"),
     timerDisplay: $(".timerDisplay"),
 
-    keyboardInput: function(event) {
+    keyboardInput: function (event) {
         var tm = app.typingMechanics1,
             text = tm.textObj.text;
         var currentOutputLength = tm.output.val().length;
@@ -38,15 +38,15 @@ app.typingMechanics1 = {
             event.preventDefault();
         }
     },
-    inputWasCorrect: function(input) {
+    inputWasCorrect: function (input) {
         //console.log("correct: " + input);
         app.typingMechanics1.output.addClass("correct").removeClass("wrong");
     },
-    inputWasWrong: function(input) {
+    inputWasWrong: function (input) {
         //console.log("wrong:   " + input);
         app.typingMechanics1.output.addClass("wrong").removeClass("correct");
     },
-    finish: function() {
+    finish: function () {
         var end = new Date(),
             duration = end - app.typingMechanics1.timerDisplay.data("start");
         app.typingMechanics1.timerDisplay.text("timer finished.")
@@ -62,7 +62,7 @@ app.typingMechanics1 = {
 
 app.typingMechanics1.output
     .on("keypress", app.typingMechanics1.keyboardInput)
-    .on("keydown", function(e) {
+    .on("keydown", function (e) {
         var key = e.keyCode;
         if (key == 8 || key == 46) {
             //console.log("delete or backspace");
