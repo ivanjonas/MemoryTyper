@@ -23,7 +23,7 @@ app.typingMechanics1 = {
         var target = text[currentOutputLength]; // the next element. TODO check for aioobe
         // TODO checks for settings to skip optional punctuation, casing, etcetera
 
-        if (target === input) {
+        if (target === input || tm.isLineEnding(target, input)) {
             if (currentOutputLength === 0) {
                 // start the timer
                 tm.timerDisplay.text("timer running...")
@@ -35,7 +35,7 @@ app.typingMechanics1 = {
             app.typingMechanics1.inputWasCorrect(input);
         } else {
             app.typingMechanics1.inputWasWrong(input);
-            event.preventDefault();
+            event.preventDefault(); // this is what prevents bad text from being typed (TODO but not pasted)
         }
     },
     inputWasCorrect: function (input) {
@@ -57,6 +57,16 @@ app.typingMechanics1 = {
             wpm = Math.round((wordCount / duration * 100000 * 60)) / 100;
 
         $(".results").text(wordCount + " words in " + (duration / 1000) + " seconds. " + wpm + " words per minute.")
+    },
+    isLineEnding: function () {
+        var isLineEnding = true;
+        $.each(arguments, function (idx, arg) {
+            if (arg.charCodeAt(0) !== 10 && arg.charCodeAt(0) !== 13) {
+                isLineEnding = false;
+                return false; // only breaks from the $.each loop
+            }
+        });
+        return isLineEnding;
     }
 };
 

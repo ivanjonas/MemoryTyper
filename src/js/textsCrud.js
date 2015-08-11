@@ -3,13 +3,14 @@ app.textsCrud = {
     texts: undefined,
     loadText: function (textObj) {
         app.typingMechanics1.textObj = textObj;
+        $(".text").show();
         $(".text").text(textObj.text).fixHeight();
         $(".go").removeAttr("disabled").show();
     },
     /**
      * populate the list with Texts. Runs once on page load.
      */
-    load: function () {
+    initLoad: function () {
         var tc = app.textsCrud;
         var userTexts = $("#user-texts").find("ul").empty(); // DOM el
 

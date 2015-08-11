@@ -1,11 +1,9 @@
 // polyfills
 (function($) {
     $.fn.fixHeight = function () { // TODO namespace my own jQuery extensions
-        if (this.get(0) ? this.get(0).scrollHeight > this.innerHeight() : false) {
+        this.innerHeight(30);
+        if (this.get(0) && this.get(0).scrollHeight > this.innerHeight()) {
             this.innerHeight(this.get(0).scrollHeight);
-        }
-        if (this.innerHeight() < 30) {
-            this.innerHeight(30);
         }
     }
 })(jQuery);
@@ -24,13 +22,12 @@ function getNextAutoIncrement() {
 }
 
 $(function() {
-    app.textsCrud.load();
+    app.textsCrud.initLoad();
     $(".text").fixHeight();
     $(".output").focus();
 
     $(document).on("click", ".go", function (e) {
         e.preventDefault();
-        $(e.target).hide();
         $(".text").toggle();
         $(".output").focus();
     });
@@ -38,7 +35,10 @@ $(function() {
     $(document).on("click", "#add-text-submit", function (e) {
         var newTextObj = new TextObj($("#text-add-title").val(), $("#text-add-text").val());
         app.textsCrud.saveText(newTextObj);
-
+        app.textsCrud.initLoad();
+    });
+    $(document).on("click", ".btn[data-dismiss=modal]", function (e) {
+        app.textsCrud.initLoad();
     });
 
     //$(document).on("change", ".text", function(e) {
