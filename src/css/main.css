@@ -89,8 +89,18 @@ textarea {
    ========================================================================== */
 
 /* sidebar */
-#user-texts li {
+#user-texts li span.text-title {
     cursor: pointer;
+}
+
+#user-texts li span.text-menu {
+    color: white;
+    margin-left: 0.5em;
+    cursor: pointer;
+}
+
+#user-texts li:hover span.text-menu {
+    color: #888;
 }
 
 /* typing area */

@@ -1,12 +1,4 @@
 // polyfills
-(function($) {
-    $.fn.fixHeight = function () { // TODO namespace my own jQuery extensions
-        this.innerHeight(30);
-        if (this.get(0) && this.get(0).scrollHeight > this.innerHeight()) {
-            this.innerHeight(this.get(0).scrollHeight);
-        }
-    }
-})(jQuery);
 
 // main code
 function TextObj(title, text, tags) {
@@ -26,19 +18,38 @@ $(function() {
     $(".text").fixHeight();
     $(".output").focus();
 
-    $(document).on("click", ".go", function (e) {
+    $(document).on("click", ".go", function(e) {
         e.preventDefault();
         $(".text").toggle();
         $(".output").focus();
     });
 
-    $(document).on("click", "#add-text-submit", function (e) {
+    $(document).on("click", "#text-add .btn-primary", function addNewText(e) {
         var newTextObj = new TextObj($("#text-add-title").val(), $("#text-add-text").val());
         app.textsCrud.saveText(newTextObj);
         app.textsCrud.initLoad();
-    });
-    $(document).on("click", ".btn[data-dismiss=modal]", function (e) {
+        $(e.target).closest(".modal").modal('hide');
+    }).on("click", "#text-edit .btn-primary", function editExistingText(e) {
+        var textId = $(e.target).closest(".modal").data("textId");
+        app.textsCrud.editText(textId, $("#text-edit-title").val(), $("#text-edit-text").val());
         app.textsCrud.initLoad();
+        $(e.target).closest(".modal").modal('hide');
+    }).on("click", "#text-edit .btn-warning", function deleteExistingText(e) {
+        // TODO "are you sure?" Needs custom code for multiple Bootstrap modals
+        app.textsCrud.deleteText($(e.target).closest(".modal").data("textId"));
+        app.textsCrud.initLoad();
+        $(e.target).closest(".modal").modal('hide');
+    });
+
+    $("#text-edit").on("show.bs.modal", function(event) {
+        var modal = $(this),
+            button = $(event.relatedTarget),
+            textId = button.data("textId"),
+            textObj = app.textsCrud.getByTextId(textId);
+
+        modal.find("#text-edit-title").val(textObj.title);
+        modal.find("#text-edit-text").val(textObj.text);
+        modal.data("textId", textId);
     });
 
     //$(document).on("change", ".text", function(e) {

@@ -22,4 +22,11 @@
     }
 }());
 
-// Place any jQuery/helper plugins in here.
+(function($) {
+    $.fn.fixHeight = function () { // TODO namespace my own jQuery extensions
+        this.innerHeight(30);
+        if (this.get(0) && this.get(0).scrollHeight > this.innerHeight()) {
+            this.innerHeight(this.get(0).scrollHeight);
+        }
+    }
+})(jQuery);
