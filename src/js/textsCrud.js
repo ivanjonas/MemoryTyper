@@ -34,6 +34,7 @@ app.textsCrud = {
         // do some validation first. Is this textObj already there? if so, update.
         tc.texts.push(textObj);
         tc.persistTexts();
+        tc.loadText(textObj);
     },
     editText: function editText(textId, newTitle, newText) {
         var textObj = app.textsCrud.getByTextId(textId),
