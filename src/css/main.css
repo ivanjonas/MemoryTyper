@@ -88,6 +88,11 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+/* header */
+h1 {
+    font-size: 24px;
+}
+
 /* sidebar */
 #user-texts li span.text-title {
     cursor: pointer;

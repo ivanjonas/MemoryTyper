@@ -20,26 +20,31 @@
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<h1>MemoryTyper</h1>
 
-<h2>Practice your memorization and touch typing at the same time!</h2>
-
-<div class="grid-container">
-    <div class="grid-30" id="user-texts">
-        <ul>
-
-        </ul>
-        <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#text-add">Add new Text</button>
-    </div>
-
-    <div class="grid-70" id="activity-area">
-        <textarea class="text" disabled></textarea>
-        <button class="btn btn-primary go" disabled>Hide the text above and start typing</button>
-        <textarea class="output" placeholder="Type the text above in here"></textarea>
-
-        <p class="timerDisplay">Timer stopped</p>
-
+<div class="container">
     <div class="row">
+        <h1 class="col-sm-12">MemoryTyper
+            <small>Practice memorization and touch-typing at the same time!</small>
+        </h1>
+
+        <div class="col-sm-4" id="user-texts">
+            <h3>Your texts</h3>
+            <ul>
+
+            </ul>
+            <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#text-add">Add new Text</button>
+        </div>
+
+        <div class="col-sm-8" id="activity-area">
+            <textarea class="text" disabled></textarea>
+            <button class="btn btn-primary go" disabled>Hide the text above and start typing</button>
+            <textarea class="output" placeholder="Type the text above in here"></textarea>
+
+            <p class="timerDisplay">Timer stopped</p>
+
+            <p class="results">results</p>
+        </div>
+
         <form>
             <div class="col-sm-6 form-group">
                 <div class="checkbox"><label for="option-allow-wrong-input">
