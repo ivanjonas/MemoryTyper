@@ -55,4 +55,9 @@ $(function() {
     //$(document).on("change", ".text", function(e) {
     //	text = $(".text").val();
     //}); TODO we want to prevent edits to the text outside a dedicated Edit modal
+
+    $('input[type=checkbox].option').on('change', function updateOptions() {
+        var optionKey = this.id.replace('option-','');
+        app.settings.typingOptions[optionKey] = this.checked;
+    });
 });
