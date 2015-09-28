@@ -57,7 +57,8 @@ app.typingMechanics1 = {
         function isInputCorrect() {
             var inputAndTargetMatch,
                 effectiveInput,
-                effectiveTarget;
+                effectiveTarget,
+                equivalentSymbols;
 
             if (options['require-capitalization']) {
                 effectiveInput = input;
@@ -66,10 +67,26 @@ app.typingMechanics1 = {
                 effectiveInput = input.toLowerCase();
                 effectiveTarget = target.toLowerCase();
             }
-            inputAndTargetMatch = (effectiveInput === effectiveTarget) || isLineEnding(input, target);
+
+            inputAndTargetMatch = (effectiveInput === effectiveTarget)
+                || isLineEnding(input, target)
+                || isEquivalent(effectiveInput, effectiveTarget);
 
             // Everything is correct IF the input itself is correct AND everything before is correct.
             return inputAndTargetMatch && text.substr(0, currentOutputLength) === tm.$output.val();
+        }
+
+        function isEquivalent (effectiveInput, effectiveOutput) {
+            var equivalent = false
+            tm.equivalencies.every(function (e) {
+                if (e.indexOf(effectiveInput) !== -1) {
+                    if (e.indexOf(effectiveOutput) !== -1) {
+                        equivalent = true;
+                        return;
+                    }
+                }
+            });
+            return equivalent;
         }
 
         /**
@@ -147,7 +164,12 @@ app.typingMechanics1 = {
 
             $(".results").text(wordCount + " words in " + (duration / 1000) + " seconds. " + wpm + " words per minute.")
         }
-    }
+    },
+
+    equivalencies: [
+        ["-", "‒", "–", "—", "―", "−"], // the last one is a "minus." http://codepen.io/jonas_ninja/pen/KdNvwK
+        ["\"", "“", "”"] // quotes are sometimes curly.
+    ]
 };
 
 app.typingMechanics1.$output
@@ -167,3 +189,5 @@ app.settings = {
         'require-newline': true
     }
 };
+
+
