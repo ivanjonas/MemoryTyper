@@ -1,0 +1,41 @@
+{
+  "name": "memory-typer",
+  "version": "0.1.0",
+  "description": "Practice memorization, recall, and touch typing at the same time",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasninja/MemoryTyper.git"
+  },
+  "dependencies": {
+  },
+  "keywords": [
+    "typing",
+    "memorization",
+    "touch",
+    "typing",
+    "memorize"
+  ],
+  "author": {
+    "name": "Ivan Jonas",
+    "email": "ivan@jonas.ninja",
+    "url": "http://jonas.ninja"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/jonasninja/MemoryTyper/issues"
+  },
+  "homepage": "https://github.com/jonasninja/MemoryTyper#readme",
+  "standard": {
+    "ignore": [
+      "/src/vendor/"
+    ],
+    "globals": [
+      "jQuery",
+      "$"
+    ]
+  }
+}
