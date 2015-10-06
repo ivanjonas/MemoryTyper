@@ -5,7 +5,6 @@ var app = app || {}
 app.typingMechanics1 = {
   textObj: undefined,
   $output: $('.output'),
-  $timerDisplay: $('.timerDisplay'),
 
   /**
    * Should return true if it was a success and false otherwise. TODO it doesn't.
@@ -32,11 +31,10 @@ app.typingMechanics1 = {
 
     if (isInputCorrect()) {
       tm.$output.addClass('correct').removeClass('wrong')
-      /* TODO: run these feedback updates in a separate
-       event, like the .output onchange event. */
+      /* TODO: run these feedback updates in a separate event, like the .output onchange event. */
       printNextTargets()
       scrollIntoView(tm.$output)
-      manageTimer()
+      app.timer.manageTimer(initialOutputLength, currentOutputLength, text)
     } else {
       // input is not correct. A wrong input may be treated differently depending on circumstances
       if (currentOutputLength === 0) {
@@ -143,34 +141,6 @@ app.typingMechanics1 = {
      */
     function scrollIntoView ($el) {
       $el.stop().animate({scrollTop: $el.get(0).scrollHeight - $el.innerHeight()}, 250, 'easeOutCubic')
-    }
-
-    /**
-     * Starts or stops the timer if appropriate. This means setting the start and end times on the appropriate DOM
-     * element.
-     */
-    function manageTimer () {
-      // start the timer
-      if (initialOutputLength === 0 && currentOutputLength >= 0) {
-        tm.$timerDisplay.text('timer running...')
-          .data('start', new Date())
-      }
-      // end the timer
-      if (text.length === currentOutputLength) {
-        endTimer()
-      }
-    }
-
-    function endTimer () {
-      var end = new Date()
-      var duration = end - app.typingMechanics1.$timerDisplay.data('start')
-      app.typingMechanics1.$timerDisplay.text('timer finished.')
-        .data('end', end)
-
-      var wordCount = app.typingMechanics1.textObj.text.split(/\s+/).length
-      var wpm = Math.round((wordCount / duration * 100000 * 60)) / 100
-
-      $('.results').text(wordCount + ' words in ' + (duration / 1000) + ' seconds. ' + wpm + ' words per minute.')
     }
   },
 

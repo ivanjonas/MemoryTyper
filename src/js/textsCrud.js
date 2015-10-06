@@ -2,9 +2,12 @@ var app = app || {}
 app.textsCrud = {
   texts: undefined,
   loadText: function loadText (textObj) {
-    app.typingMechanics1.textObj = textObj
+    var tm = app.typingMechanics1
+    tm.textObj = textObj
     $('.text').show().val(textObj.text).fixHeight()
     $('.go').removeAttr('disabled').show()
+
+    // remove any existing typing data
   },
   /**
    * populate the list with Texts. Runs once on page load.
