@@ -27,8 +27,32 @@
 (function ($) {
   $.fn.fixHeight = function () { // TODO namespace my own jQuery extensions
     this.innerHeight(30)
-    if (this.get(0) && this.get(0).scrollHeight > this.innerHeight()) {
-      this.innerHeight(this.get(0).scrollHeight)
+    var el = this.get(0) // 'this' is jQuery, el is its html element
+
+    if (el && el.scrollHeight > this.innerHeight()) {
+      this.innerHeight(el.scrollHeight)
+    }
+
+    if (this.innerHeight() > $(window).height() / 2 - 75) {
+      this.innerHeight($(window).height() / 2 - 75)
     }
   }
+})(jQuery)
+
+  /*
+   * jQuery Easing v1.3.2 - http://gsgd.co.uk/sandbox/jquery/easing/
+   * Open source under the BSD License.
+   * Copyright © 2008 George McGinley Smith
+   * All rights reserved.
+   * https://raw.github.com/gdsmith/jquery-easing/master/LICENSE
+   */
+
+// t: current time, b: begInnIng value, c: change In value, d: duration
+;
+(function ($) {
+  $.extend($.easing, {
+    easeOutCubic: function (x, t, b, c, d) {
+      return c * ((t = t / d - 1) * t * t + 1) + b
+    }
+  })
 })(jQuery)

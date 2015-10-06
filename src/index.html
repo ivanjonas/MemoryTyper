@@ -36,33 +36,39 @@
         </div>
 
         <div class="col-sm-8" id="activity-area">
-            <textarea class="text" disabled></textarea>
-            <button class="btn btn-primary go" disabled>Hide the text above and start typing</button>
-            <textarea class="output" placeholder="Type the text above in here"></textarea>
+            <div class="row">
+                <textarea class="text" disabled></textarea>
+                <button class="btn btn-primary go" disabled>Hide the text above and start typing</button>
+                <textarea class="output" placeholder="Type the text above in here"></textarea>
 
-            <p class="timerDisplay">Timer stopped</p>
+                <p class="timerDisplay">Timer stopped</p>
 
-            <p class="results">results</p>
+                <p class="results">results</p>
+            </div>
+            <div class="row">
+                <form>
+                    <div class="col-sm-6 form-group">
+                        <div class="checkbox"><label for="option-allow-wrong-input">
+                            <input type="checkbox" class="option" id="option-allow-wrong-input"/> Allow wrong input
+                        </label></div>
+                        <div class="checkbox"><label for="option-require-capitalization">
+                            <input type="checkbox" class="option" id="option-require-capitalization" checked/> Require
+                            capitalization
+                        </label></div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <div class="checkbox"><label for="option-require-punctuation">
+                            <input type="checkbox" class="option" id="option-require-punctuation" checked/> Require
+                            punctuation
+                        </label></div>
+                        <div class="checkbox"><label for="option-require-newline">
+                            <input type="checkbox" class="option" id="option-require-newline" checked/> Require new line
+                            (enter)
+                        </label></div>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <form>
-            <div class="col-sm-6 form-group">
-                <div class="checkbox"><label for="option-allow-wrong-input">
-                    <input type="checkbox" class="option" id="option-allow-wrong-input"/> Allow wrong input
-                </label></div>
-                <div class="checkbox"><label for="option-require-capitalization">
-                    <input type="checkbox" class="option" id="option-require-capitalization" checked/> Require capitalization
-                </label></div>
-            </div>
-            <div class="col-sm-6 form-group">
-                <div class="checkbox"><label for="option-require-punctuation">
-                    <input type="checkbox" class="option" id="option-require-punctuation" checked/> Require punctuation
-                </label></div>
-                <div class="checkbox"><label for="option-require-newline">
-                    <input type="checkbox" class="option" id="option-require-newline" checked/> Require new line (enter)
-                </label></div>
-            </div>
-        </form>
     </div>
 </div>
 

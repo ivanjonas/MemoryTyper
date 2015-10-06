@@ -22,7 +22,7 @@ $(function () {
 
   $(document).on('click', '.go', function (e) {
     e.preventDefault()
-    $('.text').toggle()
+    $('.text').toggle().fixHeight()
     $('.output').focus()
   })
 
@@ -61,5 +61,9 @@ $(function () {
   $('input[type=checkbox].option').on('change', function updateOptions () {
     var optionKey = this.id.replace('option-', '')
     app.settings.typingOptions[optionKey] = this.checked
+  })
+
+  $(window).resize(function windowResize () {
+    $('.text').fixHeight()
   })
 })

@@ -35,6 +35,7 @@ app.typingMechanics1 = {
       /* TODO: run these feedback updates in a separate
        event, like the .output onchange event. */
       printNextTargets()
+      scrollIntoView(tm.$output)
       manageTimer()
     } else {
       // input is not correct. A wrong input may be treated differently depending on circumstances
@@ -134,6 +135,14 @@ app.typingMechanics1 = {
      */
     function isPunctuation (s) {
       return !!s.match(/[^\w\s]|_/g)
+    }
+
+    /**
+     *
+     * @param $el a jQuery object representing a textarea
+     */
+    function scrollIntoView ($el) {
+      $el.stop().animate({scrollTop: $el.get(0).scrollHeight - $el.innerHeight()}, 250, 'easeOutCubic')
     }
 
     /**

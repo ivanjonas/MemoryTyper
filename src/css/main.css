@@ -113,6 +113,7 @@ textarea {
     border: 1px solid blue;
     width: 100%;
     min-height: 4em;
+    padding-bottom: 1.2em;
 }
 
 .correct {
@@ -123,11 +124,6 @@ textarea {
 .wrong {
     border: 1px solid red;
     background-color: rgba(225, 187, 192, 1);
-}
-
-body {
-    max-width: 960px;
-    margin: 0 auto;
 }
 
 
