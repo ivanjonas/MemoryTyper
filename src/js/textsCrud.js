@@ -8,6 +8,7 @@ app.textsCrud = {
     $('.go').removeAttr('disabled').show()
 
     // remove any existing typing data
+    app.timer.resetTimer()
   },
   /**
    * populate the list with Texts. Runs once on page load.

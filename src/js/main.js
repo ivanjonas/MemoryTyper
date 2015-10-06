@@ -15,6 +15,19 @@ function getNextAutoIncrement () {
   return nextId
 }
 
+app.main = {
+  revealText: function revealText () {
+    $('.text').show().fixHeight()
+    $('.go').text('Hide text and start typing')
+  },
+
+  hideText: function hideText () {
+    $('.text').hide()
+    $('.go').text('Show text')
+    $('.output').focus()
+  }
+}
+
 $(function () {
   app.textsCrud.initLoad()
   $('.text').fixHeight()
@@ -22,8 +35,11 @@ $(function () {
 
   $(document).on('click', '.go', function (e) {
     e.preventDefault()
-    $('.text').toggle().fixHeight()
-    $('.output').focus()
+    if ($('.text').is(':visible')) {
+      app.main.hideText()
+    } else {
+      app.main.revealText()
+    }
   })
 
   $(document).on('click', '#text-add .btn-primary', function addNewText (e) {

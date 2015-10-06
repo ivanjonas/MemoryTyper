@@ -32,5 +32,12 @@ app.timer = {
     var wpm = Math.round((wordCount / duration * 100000 * 60)) / 100
 
     this.$results.text(wordCount + ' words in ' + (duration / 1000) + ' seconds. ' + wpm + ' words per minute.')
+  },
+
+  resetTimer: function resetTimer () {
+    this.$timerDisplay.removeData('start end').text('timer reset')
+    this.$results.text('')
+    $('.output').removeClass('correct wrong').val('')
+    app.main.revealText()
   }
 }
