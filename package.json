@@ -23,20 +23,27 @@
     "copyfiles": "^0.2.1",
     "faucet": "0.0.1",
     "live-reload": "^1.1.0",
+    "opener": "^1.4.1",
+    "parallelshell": "^2.0.0",
     "tape": "^4.2.1",
+    "watch": "^0.16.0",
     "watchify": "^3.4.0"
   },
   "directories": {
     "test": "test"
   },
   "scripts": {
+    "open": "opener http://localhost:63342/MemoryTyper/dist/index.html",
     "pretest": "standard",
     "test": "tape test/**/*.js | faucet",
-    "build:copy": "copyfiles --up 1 src/css/* src/index.html src/js/plugins.js dist",
-    "build:browserify": "browserify src/js/main.js -o dist/js/bundle.js",
-    "build": "npm run build:copy && npm run build:browserify",
-    "watch": "watchify src/js/main.js -o dist/js/bundle.js --debug --verbose",
-    "livereload": "live-reload --port 9091 dist/"
+    "build:js": "browserify src/js/main.js -o dist/js/bundle.js",
+    "watch:js": "watch \"npm run build:js\" src/js/",
+    "build:static": "copyfiles --up 1 src/css/* src/index.html src/js/plugins.js dist",
+    "watch:static": "watch \"npm run build:static\" src/",
+    "build": "npm run build:static && npm run build:js",
+    "watch": "parallelshell \"npm run watch:static\" \"npm run watch:js\"",
+    "livereload": "live-reload --port 9091 dist/",
+    "dev": "npm run open && parallelshell \"npm run livereload\" \"npm run watch\""
   },
   "standard": {
     "ignore": [
