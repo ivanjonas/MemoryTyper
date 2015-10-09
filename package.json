@@ -22,6 +22,7 @@
   "devDependencies": {
     "copyfiles": "^0.2.1",
     "faucet": "0.0.1",
+    "live-reload": "^1.1.0",
     "tape": "^4.2.1",
     "watchify": "^3.4.0"
   },
@@ -34,7 +35,8 @@
     "build:copy": "copyfiles --up 1 src/css/* src/index.html src/js/plugins.js dist",
     "build:browserify": "browserify src/js/main.js -o dist/js/bundle.js",
     "build": "npm run build:copy && npm run build:browserify",
-    "watch": "watchify src/js/main.js -o dist/js/bundle.js --debug --verbose"
+    "watch": "watchify src/js/main.js -o dist/js/bundle.js --debug --verbose",
+    "livereload": "live-reload --port 9091 dist/"
   },
   "standard": {
     "ignore": [
