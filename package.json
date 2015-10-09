@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jonasninja/MemoryTyper#readme",
   "devDependencies": {
+    "copyfiles": "^0.2.1",
     "faucet": "0.0.1",
     "tape": "^4.2.1",
     "watchify": "^3.4.0"
@@ -28,13 +29,17 @@
     "test": "test"
   },
   "scripts": {
+    "pretest": "standard",
     "test": "tape test/**/*.js | faucet",
-    "build": "browserify src/js/main.js -o src/js/bundle.js",
-    "watch": "watchify src/js/main.js -o src/js/bundle.js --debug --verbose"
+    "build:copy": "copyfiles --up 1 src/css/* src/index.html src/js/plugins.js dist",
+    "build:browserify": "browserify src/js/main.js -o dist/js/bundle.js",
+    "build": "npm run build:copy && npm run build:browserify",
+    "watch": "watchify src/js/main.js -o dist/js/bundle.js --debug --verbose"
   },
   "standard": {
     "ignore": [
-      "/src/vendor/"
+      "*/vendor/",
+      "dist"
     ],
     "globals": [
       "jQuery",

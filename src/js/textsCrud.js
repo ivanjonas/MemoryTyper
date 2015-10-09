@@ -2,6 +2,7 @@
 
 let typingMechanics = require('./typingMechanics')
 const timer = require('./timer')
+const lev = require('./vendor/fast-levenshtein')
 
 module.exports = {
   texts: null,
@@ -43,7 +44,7 @@ module.exports = {
   },
   editText: function editText (textId, newTitle, newText) {
     var textObj = this.getByTextId(textId)
-    var distance = window.Levenshtein.get(textObj.text.toLowerCase(), newText.toLowerCase())
+    var distance = lev.get(textObj.text.toLowerCase(), newText.toLowerCase())
 
     if (distance > 30) { // an arbitrary number
       // AND there is historical data for this text
