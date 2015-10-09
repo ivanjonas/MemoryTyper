@@ -1,10 +1,18 @@
 /**
  * Created by Yvonne on 2015-07-05.
  */
-var app = app || {}
-app.typingMechanics1 = {
+'use strict'
+
+const timer = require('./timer')
+let settings = require('./settings')
+
+module.exports = {
   textObj: undefined,
   $output: $('.output'),
+  equivalencies: [
+    ['-', '‒', '–', '—', '―', '−'], // the last one is a "minus." http://codepen.io/jonas_ninja/pen/KdNvwK
+    ['"', '“', '”'] // quotes are sometimes curly.
+  ],
 
   /**
    * Should return true if it was a success and false otherwise. TODO it doesn't.
@@ -13,37 +21,38 @@ app.typingMechanics1 = {
   keyboardInput: function (event) {
     var text
     var target
-    var tm = app.typingMechanics1
+    var $output = module.exports.$output
+    var textObj = module.exports.textObj
     var input = String.fromCharCode(event.keyCode)
-    var currentOutput = tm.$output.val()
+    var currentOutput = module.exports.$output.val()
     var currentOutputLength = currentOutput.length
     var initialOutputLength = currentOutputLength
-    var options = app.settings.typingOptions
+    var options = settings.typingOptions
 
     event.preventDefault() // FIXME: does not prevent paste
 
     // don't run this handler when there is no text available, or when the text is done.
-    text = tm.textObj ? tm.textObj.text : ''
+    text = textObj ? textObj.text : ''
     if (text.length === 0 || text === currentOutput) {
       return
     }
     target = text[currentOutputLength] // FIXME check for aioob
 
     if (isInputCorrect()) {
-      tm.$output.addClass('correct').removeClass('wrong')
+      $output.addClass('correct').removeClass('wrong')
       /* TODO: run these feedback updates in a separate event, like the .output onchange event. */
       printNextTargets()
-      scrollIntoView(tm.$output)
-      app.timer.manageTimer(initialOutputLength, currentOutputLength, text)
+      scrollIntoView($output)
+      timer.manageTimer(initialOutputLength, currentOutputLength, text)
     } else {
       // input is not correct. A wrong input may be treated differently depending on circumstances
       if (currentOutputLength === 0) {
         // timer is not going. Don't give feedback. Don't accept wrong input as the first input.
       } else {
-        tm.$output.addClass('wrong').removeClass('correct')
+        $output.addClass('wrong').removeClass('correct')
 
         // print only the wrong character, not the target characters.
-        if (app.settings.typingOptions['allow-wrong-input']) {
+        if (settings.typingOptions['allow-wrong-input']) {
           printToOutput(input)
         }
       }
@@ -71,12 +80,12 @@ app.typingMechanics1 = {
         isEquivalent(effectiveInput, effectiveTarget)
 
       // Everything is correct IF the input itself is correct AND everything before is correct.
-      return inputAndTargetMatch && text.substr(0, currentOutputLength) === tm.$output.val()
+      return inputAndTargetMatch && text.substr(0, currentOutputLength) === $output.val() // FIXME there's a var for $output.val()
     }
 
     function isEquivalent (effectiveInput, effectiveOutput) {
       var equivalent = false
-      tm.equivalencies.every(function (e) {
+      module.exports.equivalencies.every(function (e) {
         if (e.indexOf(effectiveInput) !== -1) {
           if (e.indexOf(effectiveOutput) !== -1) {
             equivalent = true
@@ -93,7 +102,7 @@ app.typingMechanics1 = {
      * @param t
      */
     function printToOutput (t) {
-      tm.$output.val(tm.$output.val() + t) // FIXME: what if a selection of text is replaced by the input?
+      $output.val($output.val() + t) // FIXME: what if a selection of text is replaced by the input?
     }
 
     /**
@@ -142,28 +151,5 @@ app.typingMechanics1 = {
     function scrollIntoView ($el) {
       $el.stop().animate({scrollTop: $el.get(0).scrollHeight - $el.innerHeight()}, 250, 'easeOutCubic')
     }
-  },
-
-  equivalencies: [
-    ['-', '‒', '–', '—', '―', '−'], // the last one is a "minus." http://codepen.io/jonas_ninja/pen/KdNvwK
-    ['"', '“', '”'] // quotes are sometimes curly.
-  ]
-}
-
-app.typingMechanics1.$output
-  .on('keypress', app.typingMechanics1.keyboardInput)
-  .on('keydown', function (e) { // TODO explore the differences between keypress and keydown
-    var key = e.keyCode
-    if (key === 8 || key === 46) {
-      // console.log("delete or backspace")
-    }
-  })
-
-app.settings = {
-  typingOptions: {
-    'allow-wrong-input': false,
-    'require-capitalization': true,
-    'require-punctuation': true,
-    'require-newline': true
   }
 }

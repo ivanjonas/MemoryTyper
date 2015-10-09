@@ -1,10 +1,11 @@
 /**
  * Created by Yvonne on 10/6/2015.
  */
+'use strict'
 
-var app = app || {}
+const domManipulation = require('./utils/domManipulation')
 
-app.timer = {
+module.exports = {
   $timerDisplay: $('.timerDisplay'),
   $results: $('.results'),
 
@@ -38,6 +39,6 @@ app.timer = {
     this.$timerDisplay.removeData('start end').text('timer reset')
     this.$results.text('')
     $('.output').removeClass('correct wrong').val('')
-    app.main.revealText()
+    domManipulation.revealText()
   }
 }

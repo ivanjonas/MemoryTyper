@@ -21,13 +21,16 @@
   "homepage": "https://github.com/jonasninja/MemoryTyper#readme",
   "devDependencies": {
     "faucet": "0.0.1",
-    "tape": "^4.2.1"
+    "tape": "^4.2.1",
+    "watchify": "^3.4.0"
   },
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "tape test/**/*.js | faucet"
+    "test": "tape test/**/*.js | faucet",
+    "build": "browserify src/js/main.js -o src/js/bundle.js",
+    "watch": "watchify src/js/main.js -o src/js/bundle.js --debug --verbose"
   },
   "standard": {
     "ignore": [

@@ -1,0 +1,26 @@
+{
+  "name": "MemoryTyper",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonasninja/MemoryTyper",
+  "authors": [
+    "Ivan Jonas <ivan@jonas.ninja> (http://jonas.ninja)"
+  ],
+  "main": "src/js/main.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "typing",
+    "memorization",
+    "touch typing",
+    "memorize"
+  ],
+  "license": "UNLICENSED",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

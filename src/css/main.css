@@ -110,10 +110,16 @@ h1 {
 
 /* typing area */
 textarea {
-    border: 1px solid blue;
+    border: 1px solid gray;
     width: 100%;
     min-height: 4em;
     padding-bottom: 1.2em;
+}
+textarea.text {
+  margin-bottom: .4em;
+}
+textarea.output {
+    margin-top: .4em;
 }
 
 .correct {
