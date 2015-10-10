@@ -1,6 +1,7 @@
 'use strict'
 
 let typingMechanics = require('./typingMechanics')
+const domManipulation = require('./utils/domManipulation')
 const timer = require('./timer')
 const lev = require('./vendor/fast-levenshtein')
 let texts = JSON.parse(window.localStorage.getItem('texts')) // an array of textObjs
@@ -28,10 +29,10 @@ module.exports = {
   },
   loadText: function loadText (textObj) {
     typingMechanics.textObj = textObj
+    $('#activity-area').data('textObj', textObj)
     $('.text').show().val(textObj.text).fixHeight()
-    $('.go').removeAttr('disabled').show()
-
-    // remove any existing typing data
+    $('button.practice-mode').removeAttr('disabled')
+    domManipulation.resetMode()
     timer.resetTimer()
   },
   saveText: function saveText (textObj) {
@@ -72,7 +73,7 @@ module.exports = {
     if (typingMechanics.textObj !== undefined && typingMechanics.textObj.id === textId) {
       $('textarea.text').val('')
       $('#text-edit').removeData('textId')
-      $('.go').attr('disabled', 'disabled')
+      $('.mode-typing').attr('disabled', 'disabled')
     }
   },
   persistTexts: function persistTexts () {

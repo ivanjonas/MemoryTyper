@@ -36,37 +36,44 @@
         </div>
 
         <div class="col-sm-8" id="activity-area">
-            <div class="row">
+            <div id="mode-typing" class="practice-mode">
                 <textarea class="text" disabled></textarea>
-                <button class="btn btn-primary go" disabled>Hide text and start typing</button>
+                <button class="btn btn-primary practice-mode mode-typing" disabled>Hide text and start typing</button>
+                <button class="btn btn-default practice-mode mode-blur" disabled>Blur mode</button>
                 <textarea class="output" placeholder="Type the text above in here"></textarea>
-
-                <p class="timerDisplay">Timer stopped</p>
-
-                <p class="results"></p>
+                <div class="timerDisplay">Timer stopped</div>
+                <div class="results"></div>
+                <div class="row">
+                    <form>
+                        <div class="col-xs-6 form-group">
+                            <div class="checkbox"><label for="option-allow-wrong-input">
+                                <input type="checkbox" class="option" id="option-allow-wrong-input"/> Allow wrong input
+                            </label></div>
+                            <div class="checkbox"><label for="option-require-capitalization">
+                                <input type="checkbox" class="option" id="option-require-capitalization" checked/> Require
+                                capitalization
+                            </label></div>
+                        </div>
+                        <div class="col-xs-6 form-group">
+                            <div class="checkbox"><label for="option-require-punctuation">
+                                <input type="checkbox" class="option" id="option-require-punctuation" checked/> Require
+                                punctuation
+                            </label></div>
+                            <div class="checkbox"><label for="option-require-newline">
+                                <input type="checkbox" class="option" id="option-require-newline" checked/> Require new line
+                                (enter)
+                            </label></div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="row">
-                <form>
-                    <div class="col-sm-6 form-group">
-                        <div class="checkbox"><label for="option-allow-wrong-input">
-                            <input type="checkbox" class="option" id="option-allow-wrong-input"/> Allow wrong input
-                        </label></div>
-                        <div class="checkbox"><label for="option-require-capitalization">
-                            <input type="checkbox" class="option" id="option-require-capitalization" checked/> Require
-                            capitalization
-                        </label></div>
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <div class="checkbox"><label for="option-require-punctuation">
-                            <input type="checkbox" class="option" id="option-require-punctuation" checked/> Require
-                            punctuation
-                        </label></div>
-                        <div class="checkbox"><label for="option-require-newline">
-                            <input type="checkbox" class="option" id="option-require-newline" checked/> Require new line
-                            (enter)
-                        </label></div>
-                    </div>
-                </form>
+            <div id="mode-blur" class="practice-mode" style="display: none">
+                <p>Blur mode <span class="blurred">text</span> here</p>
+
+                <div class="btn-group" role="group" aria-label="Blur mode actions">
+                    <button class="btn btn-default back">Back to main</button>
+                    <button class="btn btn-primary blur">Blur</button>
+                </div>
             </div>
         </div>
     </div>
@@ -137,6 +144,5 @@
         crossorigin="anonymous"></script>
 <script src="js/plugins.js"></script>
 <script src="js/bundle.js"></script>
-<script src="//localhost:9091"></script>
 </body>
 </html>
