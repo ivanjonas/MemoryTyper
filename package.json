@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jonasninja/MemoryTyper#readme",
   "devDependencies": {
+    "browserify": "^11.2.0",
     "copyfiles": "^0.2.1",
     "faucet": "0.0.1",
     "http-server": "^0.8.5",
