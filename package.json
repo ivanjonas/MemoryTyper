@@ -1,6 +1,6 @@
 {
   "name": "memory-typer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Practice memorization, recall, and touch typing at the same time",
   "main": "index.html",
   "repository": {
@@ -55,5 +55,8 @@
       "jQuery",
       "$"
     ]
+  },
+  "dependencies": {
+    "lodash": "^3.10.1"
   }
 }

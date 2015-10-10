@@ -13,5 +13,13 @@ module.exports = {
     $('.text').hide()
     $('.go').text('Show text')
     $('.output').focus()
+  },
+
+  changeMode: function changeMode (selectorString) {
+    $('div.practice-mode').hide().filter(selectorString).show()
+  },
+
+  resetMode: function resetMode () {
+    module.exports.changeMode('#mode-typing')
   }
 }

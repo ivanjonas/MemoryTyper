@@ -2,6 +2,7 @@
 
 let textsCrud = require('./textsCrud')
 const domManipulation = require('./utils/domManipulation')
+const blurmode = require('./mode-blur')
 let typingMechanics = require('./typingMechanics')
 let settings = require('./settings')
 
@@ -24,14 +25,17 @@ $(function () {
   $('.text').fixHeight()
   $('.output').focus()
 
-  $(document).on('click', '.go', function (e) {
+  $(document).on('click', 'button.mode-typing', function (e) {
     e.preventDefault()
     if ($('.text').is(':visible')) {
       domManipulation.hideText()
     } else {
       domManipulation.revealText()
     }
-  })
+  }).on('click', 'button.mode-blur', blurmode.start)
+    .on('click', '#mode-blur button.blur', blurmode.blur)
+    .on('click', '#mode-blur button.back', blurmode.back)
+    .on('click', '#mode-blur .blurrable.blurred', blurmode.toggleBlur)
 
   $(document).on('click', '#text-add .btn-primary', function addNewText (e) {
     var newTextObj = new TextObj($('#text-add-title').val(), $('#text-add-text').val())
