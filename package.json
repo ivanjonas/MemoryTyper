@@ -44,7 +44,7 @@
     "build": "npm run build:static && npm run build:js",
     "server": "http-server -p 9090 dist/",
     "livereload": "live-reload --port 9091 dist/",
-    "dev": "npm run open:dev && parallelshell \"npm run server\" \"npm run livereload\" \"npm run watch:static\" \"npm run watch:js\""
+    "dev": "parallelshell -v \"npm run server\" \"npm run livereload\" \"npm run watch:static\" \"npm run watch:js\" \"npm run open:dev\""
   },
   "standard": {
     "ignore": [
