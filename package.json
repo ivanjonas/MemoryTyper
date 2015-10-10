@@ -38,14 +38,20 @@
     "open:dev": "opener http://localhost:9090",
     "pretest": "standard",
     "test": "tape test/**/*.js | faucet",
+
     "build:js": "browserify src/js/main.js -o dist/js/bundle.js",
     "watch:js": "watch \"npm run build:js\" src/js/",
     "build:static": "copyfiles --up 1 src/css/* src/index.html src/js/plugins.js dist",
     "watch:static": "watch \"npm run build:static\" src/",
     "build": "npm run build:static && npm run build:js",
+    "watch": "watch \"npm run build\" src/",
+
     "server": "http-server -p 9090 dist/",
     "livereload": "live-reload --port 9091 dist/",
-    "dev": "parallelshell -v \"npm run server\" \"npm run livereload\" \"npm run watch:static\" \"npm run watch:js\" \"npm run open:dev\""
+
+    "start": "npm run build && npm run server",
+    "dev":      "parallelshell -v \"npm run watch\" \"npm run server\" \"npm run open:dev\"",
+    "dev:live": "parallelshell -v \"npm run watch\" \"npm run server\" \"npm run open:dev\" \"npm run livereload\""
   },
   "standard": {
     "ignore": [
