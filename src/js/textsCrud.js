@@ -3,9 +3,29 @@
 let typingMechanics = require('./typingMechanics')
 const timer = require('./timer')
 const lev = require('./vendor/fast-levenshtein')
+let texts = JSON.parse(window.localStorage.getItem('texts')) // an array of textObjs
 
 module.exports = {
-  texts: null,
+  /**
+   * populate the list with Texts. Runs once on page load.
+   */
+  initLoad: function initLoad () {
+    var $userTexts = $('#user-texts').find('ul').empty() // DOM el
+
+    if (texts == null) {
+      return
+    }
+    texts.forEach(function (el) {
+      var li = $('<li><span class="text-title">' + el.title +
+        '</span><span class="glyphicon glyphicon-cog text-menu" data-toggle="modal" data-target="#text-edit" data-text-id="' + el.id + '"></span></li>') // TODO use Polymer element here
+      li.data('text', el.text)
+      li.data('id', el.id)
+      $userTexts.append(li)
+      li.on('click', 'span.text-title', function () {
+        module.exports.loadText(el)
+      })
+    })
+  },
   loadText: function loadText (textObj) {
     typingMechanics.textObj = textObj
     $('.text').show().val(textObj.text).fixHeight()
@@ -14,31 +34,12 @@ module.exports = {
     // remove any existing typing data
     timer.resetTimer()
   },
-  /**
-   * populate the list with Texts. Runs once on page load.
-   */
-  initLoad: function initLoad () {
-    var userTexts = $('#user-texts').find('ul').empty() // DOM el
-
-    this.texts = JSON.parse(window.localStorage.getItem('texts')) // an array of textObjects
-
-    if (this.texts === undefined) {
-      return
-    }
-    this.texts.forEach(function (el) {
-      var li = $('<li><span class="text-title">' + el.title +
-        '</span><span class="glyphicon glyphicon-cog text-menu" data-toggle="modal" data-target="#text-edit" data-text-id="' + el.id + '"></span></li>') // TODO use Polymer element here
-      li.data('text', el.text)
-      li.data('id', el.id)
-      userTexts.append(li)
-      li.on('click', 'span.text-title', function () {
-        module.exports.loadText(el)
-      })
-    })
-  },
   saveText: function saveText (textObj) {
     // do some validation first. Is this textObj already there? if so, update.
-    this.texts.push(textObj)
+    if (texts == null) {
+      texts = []
+    }
+    texts.push(textObj)
     this.persistTexts()
     module.exports.loadText(textObj)
   },
@@ -62,7 +63,7 @@ module.exports = {
     }
   },
   deleteText: function deleteText (textId) {
-    this.texts = this.texts.filter(function (el) {
+    texts = texts.filter(function (el) {
       return el.id !== textId
     })
     this.persistTexts()
@@ -75,15 +76,15 @@ module.exports = {
     }
   },
   persistTexts: function persistTexts () {
-    window.localStorage.setItem('texts', JSON.stringify(this.texts))
+    window.localStorage.setItem('texts', JSON.stringify(texts))
   },
 
   getByTextId: function getByTextId (textId) {
-    var textObjArray = this.texts.filter(function filterById (textObj) {
+    var textObjArray = texts.filter(function filterById (textObj) {
       return textObj.id === textId
     })
     if (textObjArray.length !== 1) {
-      console.log('Searched for textId ' + textId + ' but did not find a unique result. Full texts: \n' + this.texts) // TODO replace with a real logging implementation
+      console.log('Searched for textId ' + textId + ' but did not find a unique result. Full texts: \n' + texts) // TODO replace with a real logging implementation
       throw new Error('Unique result not found')
     }
     return textObjArray[0]
