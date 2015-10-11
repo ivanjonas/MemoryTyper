@@ -8,7 +8,8 @@ let settings = require('./settings')
 
 const equivalencies = [
   ['-', '‒', '–', '—', '―', '−'], // the last one is a "minus." http://codepen.io/jonas_ninja/pen/KdNvwK
-  ['"', '“', '”'] // quotes are sometimes curly.
+  ['"', '“', '”'], // quotes are sometimes curly.
+  ["'", '‘', '’']
 ]
 
 module.exports = {
