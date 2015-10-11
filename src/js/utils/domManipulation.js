@@ -6,12 +6,12 @@
 module.exports = {
   revealText: function revealText () {
     $('.text').show().fixHeight()
-    $('.go').text('Hide text and start typing')
+    $('button.practice-mode').show().filter('button.mode-typing').text('Hide text and start typing')
   },
 
   hideText: function hideText () {
     $('.text').hide()
-    $('.go').text('Show text')
+    $('button.practice-mode').hide().filter('button.mode-typing').show().text('Show text')
     $('.output').focus()
   },
 

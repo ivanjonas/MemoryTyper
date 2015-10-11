@@ -74,7 +74,14 @@ $(function () {
     .on('keydown', function (e) { // TODO explore the differences between keypress and keydown
       var key = e.keyCode
       if (key === 8 || key === 46) {
-        // console.log("delete or backspace")
+        const $output = $('.output')
+        const outputVal = $output.val()
+        const match = typingMechanics.textObj.text.substr(0, outputVal.length) === outputVal
+        if (match) {
+          $output.removeClass('wrong').addClass('correct')
+        } else {
+          $output.removeClass('correct').addClass('wrong')
+        }
       }
     })
 

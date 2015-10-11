@@ -99,7 +99,7 @@ h1 {
 }
 
 #user-texts li span.text-menu {
-  color: white;
+  color: transparent;
   margin-left: 0.5em;
   cursor: pointer;
 }
