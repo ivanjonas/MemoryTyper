@@ -6,13 +6,14 @@
 const timer = require('./timer')
 let settings = require('./settings')
 
+const equivalencies = [
+  ['-', '‒', '–', '—', '―', '−'], // the last one is a "minus." http://codepen.io/jonas_ninja/pen/KdNvwK
+  ['"', '“', '”'] // quotes are sometimes curly.
+]
+
 module.exports = {
   textObj: undefined,
   $output: $('.output'),
-  equivalencies: [
-    ['-', '‒', '–', '—', '―', '−'], // the last one is a "minus." http://codepen.io/jonas_ninja/pen/KdNvwK
-    ['"', '“', '”'] // quotes are sometimes curly.
-  ],
 
   /**
    * Should return true if it was a success and false otherwise. TODO it doesn't.
@@ -85,12 +86,11 @@ module.exports = {
 
     function isEquivalent (effectiveInput, effectiveOutput) {
       var equivalent = false
-      module.exports.equivalencies.every(function (e) {
-        if (e.indexOf(effectiveInput) !== -1) {
-          if (e.indexOf(effectiveOutput) !== -1) {
-            equivalent = true
-            // RESEARCH return optimized by v8?
-          }
+      equivalencies.forEach(function (e) {
+        if (e.indexOf(effectiveInput) !== -1 &&
+          e.indexOf(effectiveOutput) !== -1) {
+          equivalent = true
+          // RESEARCH return optimized by v8?
         }
       })
       return equivalent
