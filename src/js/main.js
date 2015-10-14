@@ -3,6 +3,7 @@
 let textsCrud = require('./textsCrud')
 const domManipulation = require('./utils/domManipulation')
 const blurmode = require('./mode-blur')
+const timer = require('./timer')
 let typingMechanics = require('./typingMechanics')
 let settings = require('./settings')
 
@@ -65,18 +66,38 @@ $(function () {
     modal.data('textId', textId)
   })
 
-  // $(document).on("change", ".text", function(e) {
-  //	text = $(".text").val()
-  // }); TODO we want to prevent edits to the text outside a dedicated Edit modal
-
   typingMechanics.$output
     .on('keypress', typingMechanics.keyboardInput)
-    .on('keydown', function (e) { // TODO explore the differences between keypress and keydown
-      var key = e.keyCode
-      if (key === 8 || key === 46) {
+    .on('keydown', function (e) {
+      if (!timer.isRunning()) {
+        return
+      }
+
+      var key = e.keyCode || e.which
+      if (key === 8 || key === 46) { // backspace or delete
         const $output = $('.output')
         const outputVal = $output.val()
-        const match = typingMechanics.textObj.text.substr(0, outputVal.length) === outputVal
+        let textAfterEdit
+        let selectionEnd = $output.get(0).selectionEnd
+        let selectionStart = $output.get(0).selectionStart
+        if (key === 8) {
+          // backspace
+          if (!e.ctrlKey) {
+            textAfterEdit = outputVal.slice(0, Math.max(selectionStart - 1, 0)) + outputVal.slice(selectionEnd)
+          } else {
+            // backspace the entire last "word"
+            const substring = outputVal.slice(0, $output.get(0).selectionStart)
+            const cutAtIndex = substring.lastIndexOf(substring.match(/(\b[\w-]+\b)/g).pop())
+            textAfterEdit = substring.slice(0, cutAtIndex)
+          }
+        } else {
+          // delete
+          textAfterEdit = outputVal.slice(0, selectionStart) + outputVal.slice(selectionEnd + 1)
+          // technically this should also check for control, but probably won't happen.
+          // TODO put a logger statement here to let me know if it ever actually happens.
+        }
+        const match = typingMechanics.textObj.text.substr(0, textAfterEdit.length) === textAfterEdit
+
         if (match) {
           $output.removeClass('wrong').addClass('correct')
         } else {

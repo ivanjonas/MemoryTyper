@@ -11,7 +11,7 @@ exports.$timerDisplay = $timerDisplay
 exports.$results = $results
 exports.manageTimer = manageTimer
 exports.endTimer = endTimer
-// exports.isRunning = isRunning
+exports.isRunning = isRunning
 exports.resetTimer = resetTimer
 
 /**
@@ -45,4 +45,11 @@ function resetTimer () {
   $results.text('')
   $('.output').removeClass('correct wrong').val('')
   domManipulation.revealText()
+}
+
+function isRunning () {
+  if (!jQuery.hasData($timerDisplay.get(0))) {
+    return false
+  }
+  return $timerDisplay.data('start') !== undefined && $timerDisplay.data('end') === undefined
 }
