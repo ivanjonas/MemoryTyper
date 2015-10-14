@@ -4,39 +4,45 @@
 'use strict'
 
 const domManipulation = require('./utils/domManipulation')
+let $timerDisplay = $('.timerDisplay')
+let $results = $('.results')
 
-exports.$timerDisplay = $('.timerDisplay')
-exports.$results = $('.results')
+exports.$timerDisplay = $timerDisplay
+exports.$results = $results
+exports.manageTimer = manageTimer
+exports.endTimer = endTimer
+// exports.isRunning = isRunning
+exports.resetTimer = resetTimer
 
 /**
  * Starts or stops the timer if appropriate. This means setting the start and end times on the appropriate DOM
  * element.
  */
-exports.manageTimer = function manageTimer (initialOutputLength, currentOutputLength, text) {
+function manageTimer (initialOutputLength, currentOutputLength, text) {
   // start the timer
   if (initialOutputLength === 0 && currentOutputLength >= 0) {
-    this.$timerDisplay.text('timer running...').data('start', new Date())
+    $timerDisplay.text('timer running...').data('start', new Date()).removeData('end')
   }
   // end the timer
   if (text.length === currentOutputLength) {
-    this.endTimer(text)
+    endTimer(text)
   }
 }
 
-exports.endTimer = function endTimer (text) {
-  var end = new Date()
-  var duration = end - this.$timerDisplay.data('start')
-  this.$timerDisplay.text('timer finished.').data('end', end)
+function endTimer (text) {
+  const end = new Date()
+  const duration = end - $timerDisplay.data('start')
+  $timerDisplay.text('timer finished.').data('end', end)
 
-  var wordCount = text.split(/\s+/).length
-  var wpm = Math.round((wordCount / duration * 100000 * 60)) / 100
+  const wordCount = text.split(/\s+/).length
+  const wpm = Math.round((wordCount / duration * 100000 * 60)) / 100
 
-  this.$results.text(wordCount + ' words in ' + (duration / 1000) + ' seconds. ' + wpm + ' words per minute.')
+  $results.text(wordCount + ' words in ' + (duration / 1000) + ' seconds. ' + wpm + ' words per minute.')
 }
 
-exports.resetTimer = function resetTimer () {
-  this.$timerDisplay.removeData('start end').text('timer reset')
-  this.$results.text('')
+function resetTimer () {
+  $timerDisplay.removeData('start end').text('timer reset')
+  $results.text('')
   $('.output').removeClass('correct wrong').val('')
   domManipulation.revealText()
 }
