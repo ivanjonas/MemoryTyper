@@ -37,19 +37,21 @@
   },
   "scripts": {
     "open:dev": "opener http://localhost:9090",
+
     "pretest": "standard",
     "test": "tape test/**/*.js | faucet",
+
     "build:js": "browserify src/js/main.js -o dist/js/bundle.js",
-    "watch:js": "watch \"npm run build:js\" src/js/",
+    "build:js:dev": "browserify src/js/main.js -o dist/js/bundle.js --debug",
     "build:static": "copyfiles --up 1 src/css/* src/index.html src/js/plugins.js dist",
+    "build": "npm run build:js && npm run build:static",
+    "watch:js:dev": "watchify src/js/main.js -o dist/js/bundle.js --delay 0 --debug --verbose",
     "watch:static": "watch \"npm run build:static\" src/",
-    "build": "npm run build:static && npm run build:js",
-    "watch": "watch \"npm run build\" src/",
-    "server:dev": "http-server -p 9090 dist/",
-    "livereload": "live-reload --port 9091 dist/",
-    "start": "npm run build && npm run server",
-    "start:dev": "parallelshell -v \"npm run watch\" \"npm run server:dev\" \"npm run open:dev\" \"npm run livereload\"",
-    "start:devlive": "parallelshell -v \"npm run watch\" \"npm run server:dev\" \"npm run open:dev\""
+    "watch": "parallelshell -v \"npm run watch:js:dev\" \"npm run watch:static\"",
+    "server": "http-server -p 9090 dist/",
+    "livereload": "live-reload -p 9091 dist/",
+    "start": "parallelshell -v \"npm run watch\" \"npm run server\" \"npm run open:dev\"",
+    "start:live": "parallelshell -v \"npm run watch\" \"npm run server\" \"npm run open:dev\" \"npm run livereload\""
   },
   "standard": {
     "ignore": [
