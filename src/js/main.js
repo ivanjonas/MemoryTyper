@@ -39,9 +39,13 @@ $(function () {
     .on('click', '#mode-blur .blurrable.blurred', blurmode.toggleBlur)
 
   $(document).on('click', '#text-add .btn-primary', function addNewText (e) {
-    var newTextObj = new TextObj($('#text-add-title').val(), $('#text-add-text').val())
+    let $title = $('#text-add-title')
+    let $text = $('#text-add-text')
+    var newTextObj = new TextObj($title.val(), $text.val())
     textsCrud.saveText(newTextObj)
     textsCrud.initLoad()
+    $title.val('')
+    $text.val('')
     $(e.target).closest('.modal').modal('hide')
   }).on('click', '#text-edit .btn-primary', function editExistingText (e) {
     var textId = $(e.target).closest('.modal').data('textId')
