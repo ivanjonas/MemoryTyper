@@ -8,7 +8,7 @@ let texts = JSON.parse(window.localStorage.getItem('texts')) // an array of text
 
 module.exports = {
   /**
-   * populate the list with Texts. Runs once on page load.
+   * populate the list with Texts. Runs once on page load, and whenever re-drawing the list.
    */
   initLoad: function initLoad () {
     var $userTexts = $('#user-texts').find('ul').empty() // DOM el
@@ -37,6 +37,7 @@ module.exports = {
   },
   saveText: function saveText (textObj) {
     // do some validation first. Is this textObj already there? if so, update.
+
     if (texts == null) {
       texts = []
     }
