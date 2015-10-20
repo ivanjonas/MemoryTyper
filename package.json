@@ -32,6 +32,11 @@
     "watch": "^0.16.0",
     "watchify": "^3.4.0"
   },
+  "dependencies": {
+    "lodash": "^3.10.1"
+  },
+  "browser": {
+  },
   "directories": {
     "test": "test"
   },
@@ -62,8 +67,5 @@
       "jQuery",
       "$"
     ]
-  },
-  "dependencies": {
-    "lodash": "^3.10.1"
   }
 }
