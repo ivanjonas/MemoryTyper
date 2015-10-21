@@ -3,6 +3,7 @@
 let textsCrud = require('./textsCrud')
 const domManipulation = require('./utils/domManipulation')
 const blurmode = require('./mode-blur')
+const wordmode = require('./mode-word')
 const timer = require('./timer')
 let typingMechanics = require('./typingMechanics')
 let settings = require('./settings')
@@ -37,6 +38,12 @@ $(function () {
     .on('click', '#mode-blur button.blur', blurmode.blur)
     .on('click', '#mode-blur button.back', blurmode.back)
     .on('click', '#mode-blur .blurrable.blurred', blurmode.toggleBlur)
+
+  $(document).on('click', 'button.mode-word', wordmode.start)
+    .on('click', '#mode-word button.back', blurmode.back) // TODO refactor so using the same code would make sense
+    .on('click', '#mode-word button.word', wordmode.revealWord)
+    .on('click', '#mode-word button.sentence', wordmode.revealSentence)
+    .on('click', '#mode-word button.reset', wordmode.reset)
 
   $(document).on('click', '#text-add .btn-primary', function addNewText (e) {
     let $title = $('#text-add-title')
@@ -91,7 +98,7 @@ $(function () {
           } else {
             // backspace the entire last "word"
             const substring = outputVal.slice(0, $output.get(0).selectionStart)
-            const cutAtIndex = substring.lastIndexOf(substring.match(/(\b[\w-]+\b)/g).pop())
+            const cutAtIndex = substring.lastIndexOf(substring.match(/(\b\w+)/g).pop())
             textAfterEdit = substring.slice(0, cutAtIndex)
           }
         } else {
