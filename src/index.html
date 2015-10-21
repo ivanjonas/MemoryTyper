@@ -42,6 +42,7 @@
                     typing
                 </button>
                 <button class="btn btn-default practice-mode mode-blur col-sm-3" disabled>Blur mode</button>
+                <button class="btn btn-default practice-mode mode-word col-sm-3" disabled>Word mode</button>
                 <textarea class="output" placeholder="Type the text above in here"></textarea>
                 <div class="timerDisplay">Timer stopped</div>
                 <div class="results"></div>
@@ -75,6 +76,16 @@
                 <div class="btn-group" role="group" aria-label="Blur mode actions">
                     <button class="btn btn-default back">Back to main</button>
                     <button class="btn btn-primary blur">Blur</button>
+                </div>
+            </div>
+            <div id="mode-word" class="practice-mode" style="display: none">
+                <p>Text here</p>
+
+                <div class="btn-group" role="group" aria-label="Word mode actions">
+                    <button class="btn btn-default back">Back to main</button>
+                    <button class="btn btn-primary word">Word</button>
+                    <button class="btn btn-primary sentence">Sentence</button>
+                    <button class="btn btn-default reset" style="display: none">Reset</button>
                 </div>
             </div>
         </div>
