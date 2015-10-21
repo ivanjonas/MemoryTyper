@@ -91,7 +91,7 @@ $(function () {
           } else {
             // backspace the entire last "word"
             const substring = outputVal.slice(0, $output.get(0).selectionStart)
-            const cutAtIndex = substring.lastIndexOf(substring.match(/(\b[\w-]+\b)/g).pop())
+            const cutAtIndex = substring.lastIndexOf(substring.match(/\b\w+/g).pop())
             textAfterEdit = substring.slice(0, cutAtIndex)
           }
         } else {
