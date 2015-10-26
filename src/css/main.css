@@ -171,6 +171,15 @@ span.blurrable.blurred.unblurred {
   margin: -1px;
 }
 
+/* Word mode */
+.btn-group {
+  display: flex;
+}
+
+.btn-group .btn-primary, #mode-word .btn.reset {
+  flex-grow: 1;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
