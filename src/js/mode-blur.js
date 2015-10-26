@@ -27,7 +27,7 @@ exports.start = function () {
   })
   contents += text.slice(lastPos) + '</span>'
 
-  $('#mode-blur').data({
+  $modeBlur.data({
     'tokens': tokens,
     'unusedNums': shuffle(unusedNums)
   }).find('p').html(contents)
