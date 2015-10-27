@@ -87,13 +87,14 @@ module.exports = {
 
     function isEquivalent (effectiveInput, effectiveOutput) {
       var equivalent = false
-      equivalencies.forEach(function (e) {
+      for (var e of equivalencies) {
         if (e.indexOf(effectiveInput) !== -1 &&
           e.indexOf(effectiveOutput) !== -1) {
           equivalent = true
+          break
           // RESEARCH return optimized by v8?
         }
-      })
+      }
       return equivalent
     }
 
