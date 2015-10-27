@@ -42,21 +42,25 @@ function revealWord () {
 function revealSentence () {
   const len = unbreakify($p.html()).length
   // find the next period
-  let nextPeriodIndex = len + text.slice(len).search(/[\.;]/) + 1
+  const periodIndex = text.slice(len).search(/[\.;]/)
+  let periodAndPaddingIndex, whitespaces
+  if (periodIndex !== -1) {
+    periodAndPaddingIndex = len + periodIndex + 1
+    // now show any additional whitespaces that may be necessary
+    whitespaces = text.slice(periodAndPaddingIndex).match(/[\.\s\W]*/)
+  }
 
-  // now show any additional whitespaces that may be necessary
-  let whitespaces = text.slice(nextPeriodIndex).match(/[\.\s]*/)
-  if (whitespaces == null) {
-    // there are no periods left in the text! Show everything and end the practice.
+  if (periodIndex === -1 || whitespaces == null) {
+    // This sentence reaches the end of the text. Show everything and end the practice.
     $p.html(breakify(text))
     $modeWord.find('button.btn-primary').hide()
     $modeWord.find('button.reset').show()
     return
   }
   if (whitespaces.length) {
-    nextPeriodIndex += whitespaces.shift().length
+    periodAndPaddingIndex += whitespaces.shift().length
   }
-  $p.html(breakify(text.slice(0, nextPeriodIndex)))
+  $p.html(breakify(text.slice(0, periodAndPaddingIndex)))
 
   // also clean up the tokens list so the Word button works correctly.
   const newLen = unbreakify($p.html()).length
@@ -64,7 +68,7 @@ function revealSentence () {
     tokens.shift()
   }
 
-  //
+  // TODO refactor two instances of the below into a function
   if (newLen === text.length) {
     $modeWord.find('button.btn-primary').hide()
     $modeWord.find('button.reset').show()
