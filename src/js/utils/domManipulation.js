@@ -2,6 +2,7 @@
  * Created by jonasninja on 10/8/2015.
  * helper functions for dealing with the DOM
  */
+'use strict'
 
 module.exports = {
   revealText: function revealText () {
@@ -21,5 +22,11 @@ module.exports = {
 
   resetMode: function resetMode () {
     module.exports.changeMode('#mode-typing')
+  },
+
+  setUserSettings: function setUserSettings (settings) {
+    for (let setting in settings) {
+      jQuery('#option-' + setting).prop('checked', settings[setting])
+    }
   }
 }
