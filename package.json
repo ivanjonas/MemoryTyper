@@ -42,10 +42,9 @@
   },
   "scripts": {
     "open:dev": "opener http://localhost:9090",
-
     "pretest": "standard",
-    "test": "tape test/**/*.js | faucet",
-
+    "test": "tape test/*.js | faucet",
+    "test:browser": "watchify test/browser/all.js -o test/browser/bundle.js --delay 0 --debug --verbose",
     "build:js": "browserify src/js/main.js -o dist/js/bundle.js",
     "build:js:dev": "browserify src/js/main.js -o dist/js/bundle.js --debug",
     "build:static": "copyfiles --up 1 src/css/* src/index.html src/js/plugins.js dist",
