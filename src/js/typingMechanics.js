@@ -25,7 +25,7 @@ module.exports = {
     var target
     var $output = module.exports.$output
     var textObj = module.exports.textObj
-    var input = String.fromCharCode(event.keyCode)
+    var input = String.fromCharCode(event.keyCode || event.which)
     var currentOutput = module.exports.$output.val()
     var currentOutputLength = currentOutput.length
     var initialOutputLength = currentOutputLength
