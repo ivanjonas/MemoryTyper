@@ -5,23 +5,13 @@ const domManipulation = require('./utils/domManipulation')
 const blurmode = require('./mode-blur')
 const wordmode = require('./mode-word')
 const timer = require('./timer')
+const textObj = require('./textObj')
 let typingMechanics = require('./typingMechanics')
 let settings = require('./settings')
 
 // main code
-function TextObj (title, text, tags) {
-  this.id = getNextAutoIncrement()
-  this.text = text
-  this.title = title
-  // noinspection JSUnusedGlobalSymbols
-  this.tags = tags
-}
-function getNextAutoIncrement () {
-  var nextId = parseInt(window.localStorage.getItem('textAutoIncrement') || 1, 10)
-  window.localStorage.setItem('textAutoIncrement', nextId + 1)
-  return nextId
-}
 
+settings.loadUserSettings()
 textsCrud.initLoad()
 $('.text').fixHeight()
 $('.output').focus()
@@ -47,7 +37,7 @@ $(document).on('click', 'button.mode-word', wordmode.start)
 $(document).on('click', '#text-add .btn-primary', function addNewText (e) {
   let $title = $('#text-add-title')
   let $text = $('#text-add-text')
-  var newTextObj = new TextObj($title.val(), $text.val())
+  var newTextObj = new textObj.TextObj($title.val(), $text.val())
   textsCrud.saveText(newTextObj)
   textsCrud.initLoad()
   $title.val('')
@@ -118,7 +108,7 @@ typingMechanics.$output
 
 $('input[type=checkbox].option').on('change', function updateOptions () {
   var optionKey = this.id.replace('option-', '')
-  settings.typingOptions[optionKey] = this.checked
+  settings.set(optionKey, this.checked)
 })
 
 $(window).resize(function windowResize () {

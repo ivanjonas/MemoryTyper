@@ -25,7 +25,7 @@ module.exports = {
     var target
     var $output = module.exports.$output
     var textObj = module.exports.textObj
-    var input = String.fromCharCode(event.keyCode)
+    var input = String.fromCharCode(event.keyCode || event.which)
     var currentOutput = module.exports.$output.val()
     var currentOutputLength = currentOutput.length
     var initialOutputLength = currentOutputLength
@@ -87,13 +87,14 @@ module.exports = {
 
     function isEquivalent (effectiveInput, effectiveOutput) {
       var equivalent = false
-      equivalencies.forEach(function (e) {
+      for (var e of equivalencies) {
         if (e.indexOf(effectiveInput) !== -1 &&
           e.indexOf(effectiveOutput) !== -1) {
           equivalent = true
+          break
           // RESEARCH return optimized by v8?
         }
-      })
+      }
       return equivalent
     }
 
