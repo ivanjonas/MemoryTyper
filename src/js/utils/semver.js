@@ -4,14 +4,17 @@
 'use strict'
 
 const parseErrorMessage = 'String not formatted to semver specifications'
+const updaters = [to0_3_0] // array because order matters
+
+exports.isGreater = isVersionGreater
+exports.updateData = update
+
 /**
  * Returns `True` if the first param is greater than the second param
  * @param first a semver string of the form described at http://www.semver.org
  * @param second the base semver string to which the first is compared.
  */
-exports.isGreater = function isVersionGreater (first, second) {
-  // throw an error if it cannot be parsed.
-
+function isVersionGreater (first, second) {
   const partsFirst = parse(first)
   if (second == null) {
     return true
@@ -51,4 +54,62 @@ function parse (semverString) {
   }
 
   return {major, minor, patch}
+}
+
+/**
+ * Given a function object, return the version represented in the name
+ * @param func
+ */
+function functionToVersion (func) {
+  var name = func.name.replace(/_/g, '.')
+  return name.replace('to', '')
+}
+
+function to0_3_0 () {
+  // updates old data to the format required by 0.3.0
+  console.log('updating data to 0.3.0 format')
+
+  let texts = JSON.parse(window.localStorage.getItem('texts')) // an array of textObjs
+  for (let text of texts) {
+    let due = new Date()
+    due.setMilliseconds(0)
+    due.setSeconds(0)
+    due.setMinutes(0)
+    due.setHours(0)
+
+    text.reviews = {
+      successes: 0,
+      continuousSuccesses: 0,
+      failures: 0,
+      lastResult: null, // 'success' or 'failure'
+      lastSuccess: null,
+      lastFailure: null,
+      due: due
+    }
+  }
+
+  window.localStorage.setItem('texts', JSON.stringify(texts))
+  setAppVersion('0.3.0')
+}
+
+function setAppVersion (version) {
+  window.localStorage.setItem('version', version)
+}
+
+function getAppVersion () {
+  var version = window.localStorage.getItem('version')
+  if (!version) {
+    version = '0.0.0'
+  }
+  return version
+}
+
+function update () {
+  // this would run before absolutely anything else in the application. Assume nothing in other modules.
+  for (var updater of updaters) {
+    const currVer = getAppVersion()
+    if (isVersionGreater(functionToVersion(updater), currVer)) {
+      updater()
+    }
+  }
 }

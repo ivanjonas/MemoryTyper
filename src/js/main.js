@@ -6,11 +6,12 @@ const blurmode = require('./mode-blur')
 const wordmode = require('./mode-word')
 const timer = require('./timer')
 const textObj = require('./textObj')
+const semver = require('./utils/semver')
 let typingMechanics = require('./typingMechanics')
 let settings = require('./settings')
 
 // main code
-
+semver.updateData()
 settings.loadUserSettings()
 textsCrud.initLoad()
 $('.text').fixHeight()
