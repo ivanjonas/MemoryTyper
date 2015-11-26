@@ -25,7 +25,7 @@ test('creating a new textObj', function newTextObj (t) {
   t.equal(obj.id, nextIndex)
 
   const r = obj.reviews
-  t.ok(basicallyEqual(r.due, now), 'Due date should be beginning of today')
+  t.ok(basicallyEqual(r.dueDate, now), 'Due date should be beginning of today')
   t.false(r.lastFailure)
   t.false(r.lastResult)
   t.false(r.lastSuccess)
@@ -52,15 +52,15 @@ test('getting correct reviews a few times', function getItRight (t) {
 
   let obj = new textObj.TextObj('title', 'body')
 
-  t.ok(basicallyEqual(obj.reviews.due, now))
+  t.ok(basicallyEqual(obj.reviews.dueDate, now))
   obj.generateReviewDate(true)
-  t.ok(basicallyEqual(obj.reviews.due, tomorrow))
+  t.ok(basicallyEqual(obj.reviews.dueDate, tomorrow))
   obj.generateReviewDate(true)
-  t.ok(basicallyEqual(obj.reviews.due, inTwoDays))
+  t.ok(basicallyEqual(obj.reviews.dueDate, inTwoDays))
   obj.generateReviewDate(true)
-  t.ok(basicallyEqual(obj.reviews.due, inFourDays))
+  t.ok(basicallyEqual(obj.reviews.dueDate, inFourDays))
   obj.generateReviewDate(true)
-  t.ok(basicallyEqual(obj.reviews.due, inEightDays))
+  t.ok(basicallyEqual(obj.reviews.dueDate, inEightDays))
 })
 
 test('generateReviewDate needs correct input', function needsInput (t) {
@@ -73,6 +73,10 @@ test('generateReviewDate needs correct input', function needsInput (t) {
   t.throws(function () {
     obj.generateReviewDate('string')
   })
+})
+
+test('upper limit to number of reviews', function (t) {
+
 })
 
 function basicallyEqual (date1, date2) {

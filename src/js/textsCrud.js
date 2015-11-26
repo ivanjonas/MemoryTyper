@@ -4,30 +4,29 @@ let typingMechanics = require('./typingMechanics')
 const domManipulation = require('./utils/domManipulation')
 const timer = require('./timer')
 const lev = require('./vendor/fast-levenshtein')
-let texts = JSON.parse(window.localStorage.getItem('texts')) // an array of textObjs
+const TextObj = require('./textObj').TextObj
+let texts = loadTextObjectsFromStorage() // an array of textObjs
 
 module.exports = {
   /**
    * populate the list with Texts. Runs once on page load, and whenever re-drawing the list.
    */
   initLoad: function initLoad () {
-    var $userTexts = $('#user-texts').find('ul').empty() // DOM el
+    var $cardListContainer = $('#user-texts').find('.list').empty()
 
     if (texts == null) {
+      // TODO add a nice "start here" guide
       return
     }
     texts.forEach(function (el) {
-      var li = $('<li><span class="text-title">' + el.title +
-        '</span><span class="glyphicon glyphicon-cog text-menu" data-toggle="modal" data-target="#text-edit" data-text-id="' + el.id + '"></span></li>') // TODO use Polymer element here
-      li.data('text', el.text)
-      li.data('id', el.id)
-      $userTexts.append(li)
-      li.on('click', 'span.text-title', function () {
-        module.exports.loadText(el)
-      })
+      var card = domManipulation.generateCard(el)
+      $cardListContainer.append(card)
     })
   },
   loadText: function loadText (textObj) {
+    if (typeof textObj === 'number') {
+      textObj = this.getByTextId(textObj)
+    }
     typingMechanics.textObj = textObj
     $('#activity-area').data('textObj', textObj)
     $('.text').show().val(textObj.text).fixHeight()
@@ -91,4 +90,16 @@ module.exports = {
     }
     return textObjArray[0]
   }
+}
+
+/**
+ * Deserializes the TextObj array stored in localStorage, re-linking their prototypes to the TextObj prototype.
+ * See http://nullprogram.com/blog/2013/03/11/
+ */
+function loadTextObjectsFromStorage () {
+  let objs = JSON.parse(window.localStorage.getItem('texts'))
+  for (let obj of objs) {
+    Object.setPrototypeOf(obj, TextObj.prototype)
+  }
+  return objs
 }

@@ -20,11 +20,11 @@ function TextObj (title, text, successes) {
   this.text = text
   this.title = title
 
-  let due = new Date()
-  due.setMilliseconds(0)
-  due.setSeconds(0)
-  due.setMinutes(0)
-  due.setHours(0)
+  let dueDate = new Date()
+  dueDate.setMilliseconds(0)
+  dueDate.setSeconds(0)
+  dueDate.setMinutes(0)
+  dueDate.setHours(0)
 
   this.reviews = {
     successes: 0,
@@ -33,32 +33,32 @@ function TextObj (title, text, successes) {
     lastResult: null, // 'success' or 'failure'
     lastSuccess: null,
     lastFailure: null,
-    due: due
+    dueDate: dueDate.getTime()
   }
+}
 
-  /**
-   * Updates the text metadata to reflect the new date on which it is due for review.
-   *
-   * This function calculates the next due date based on whether it was just reviewed correctly or incorrectly (as
-   * signified by the isCorrect parameter).
-   * @param isCorrect whether the just-completed review was a success (recalled correctly) or failure.
-   */
-  this.generateReviewDate = function completeReview (isCorrect) {
-    if (typeof isCorrect !== 'boolean') {
-      throw new Error('a proper boolean input is required.')
-    }
-    if (isCorrect) {
-      // review was a success. Increment and set a future date
-      this.reviews.successes += 1
-      this.reviews.lastSuccess = new Date()
-      this.reviews.lastResult = 'success'
-      this.reviews.due = getNextDate(this.reviews)
-    } else {
-      this.reviews.failures += 1
-      this.reviews.lastFailure = new Date()
-      this.reviews.lastResult = 'failure'
-      this.reviews.due = noTime(new Date())
-    }
+/**
+ * Updates the text metadata to reflect the new date on which it is due for review.
+ *
+ * This function calculates the next due date based on whether it was just reviewed correctly or incorrectly (as
+ * signified by the isCorrect parameter).
+ * @param isCorrect whether the just-completed review was a success (recalled correctly) or failure.
+ */
+TextObj.prototype.generateReviewDate = function generateReviewDate (isCorrect) {
+  if (typeof isCorrect !== 'boolean') {
+    throw new Error('a proper boolean input is required.')
+  }
+  if (isCorrect) {
+    // review was a success. Increment and set a future date
+    this.reviews.successes += 1
+    this.reviews.lastSuccess = new Date()
+    this.reviews.lastResult = 'success'
+    this.reviews.dueDate = getNextDate(this.reviews).getTime()
+  } else {
+    this.reviews.failures += 1
+    this.reviews.lastFailure = new Date()
+    this.reviews.lastResult = 'failure'
+    this.reviews.dueDate = noTime(new Date()).getTime()
   }
 }
 

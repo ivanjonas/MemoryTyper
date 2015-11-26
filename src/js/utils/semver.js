@@ -84,7 +84,7 @@ function to0_3_0 () {
       lastResult: null, // 'success' or 'failure'
       lastSuccess: null,
       lastFailure: null,
-      due: due
+      dueDate: due.getTime()
     }
   }
 
