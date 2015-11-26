@@ -10,11 +10,7 @@ let textObj = require('../../src/js/textObj')
 test('creating a new textObj', function newTextObj (t) {
   t.plan(10)
 
-  const now = new Date()
-  now.setMilliseconds(0)
-  now.setSeconds(0)
-  now.setMinutes(0)
-  now.setHours(0)
+  const now = getNow()
   const body = 'the body of the text'
   const title = 'title'
   let nextIndex = parseInt(window.localStorage.getItem('textAutoIncrement'), 10)
@@ -36,11 +32,7 @@ test('creating a new textObj', function newTextObj (t) {
 
 test('getting correct reviews a few times', function getItRight (t) {
   t.plan(5)
-  const now = new Date()
-  now.setMilliseconds(0)
-  now.setSeconds(0)
-  now.setMinutes(0)
-  now.setHours(0)
+  const now = getNow()
   const tomorrow = new Date(now)
   tomorrow.setDate(now.getDate() + 1)
   const inTwoDays = new Date(now)
@@ -82,4 +74,17 @@ test('upper limit to number of reviews', function (t) {
 function basicallyEqual (date1, date2) {
   // 15 milliseconds should be enough for any test function...
   return Math.abs(date1.getTime() - date2.getTime()) <= 15
+}
+
+/**
+ * Get a new Date object with all time fields set to 0.
+ * @return {Date}
+ */
+function getNow () {
+  const now = new Date()
+  now.setMilliseconds(0)
+  now.setSeconds(0)
+  now.setMinutes(0)
+  now.setHours(0)
+  return now
 }
