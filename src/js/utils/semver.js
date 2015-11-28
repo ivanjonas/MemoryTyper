@@ -4,7 +4,7 @@
 'use strict'
 
 const parseErrorMessage = 'String not formatted to semver specifications'
-const updaters = [to0_3_0] // array because order matters
+const updaters = [to0_3_0, to0_3_1()] // array because order matters
 
 exports.isGreater = isVersionGreater
 exports.updateData = update
@@ -90,6 +90,17 @@ function to0_3_0 () {
 
   window.localStorage.setItem('texts', JSON.stringify(texts))
   setAppVersion('0.3.0')
+}
+
+function to0_3_1 () {
+  // removes obsoleted review metadata that was introduced in 0.3.0
+  console.log('updating data to 0.3.1 format')
+
+  let texts = JSON.parse(window.localStorage.getItem('texts')) // an array of textObjs
+  for (let text of texts) delete text.reviews.lastResult
+
+  window.localStorage.setItem('texts', JSON.stringify(texts))
+  setAppVersion('0.3.1')
 }
 
 function setAppVersion (version) {
