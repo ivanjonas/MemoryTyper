@@ -3,8 +3,7 @@
  */
 
 const test = require('tape')
-const jsRoot = '../src/js'
-const semver = require(jsRoot + '/utils/semver.js')
+const semver = require('../../src/js/utils/semver.js')
 const currVer = '1.2.4' // The version in package.json
 
 test('semver--correctly parses non-value', function parseNonvalue (t) {
