@@ -3,3 +3,4 @@ node_modules
 dist
 colors
 npm-debug.log
+bundle.js

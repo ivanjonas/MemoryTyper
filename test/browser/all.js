@@ -3,3 +3,4 @@
  */
 require('./test-settings')
 require('./test-textObj')
+require('./test-semver')

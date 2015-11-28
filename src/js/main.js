@@ -6,16 +6,18 @@ const blurmode = require('./mode-blur')
 const wordmode = require('./mode-word')
 const timer = require('./timer')
 const textObj = require('./textObj')
+const semver = require('./utils/semver')
 let typingMechanics = require('./typingMechanics')
 let settings = require('./settings')
 
 // main code
-
+semver.updateData()
 settings.loadUserSettings()
 textsCrud.initLoad()
 $('.text').fixHeight()
 $('.output').focus()
 
+// interacting with practice modes
 $(document).on('click', 'button.mode-typing', function (e) {
   e.preventDefault()
   if ($('.text').is(':visible')) {
@@ -34,7 +36,32 @@ $(document).on('click', 'button.mode-word', wordmode.start)
   .on('click', '#mode-word button.sentence', wordmode.revealSentence)
   .on('click', '#mode-word button.reset', wordmode.reset)
 
-$(document).on('click', '#text-add .btn-primary', function addNewText (e) {
+// loading, adding and editing texts
+$(document).on('click', '.text-card', function loadCard (e) {
+  textsCrud.loadText(parseInt($(this).data('textId'), 10))
+}).on('click', '.text-card .card-menu', function (e) {
+  const modal = $('#text-edit').modal()
+  const textId = $(this).closest('.text-card').data('textId')
+  const textObj = textsCrud.getByTextId(textId)
+
+  modal.find('#text-edit-title').val(textObj.title)
+  modal.find('#text-edit-text').val(textObj.text)
+  modal.data('textId', textId)
+
+  e.stopPropagation()
+}).on('click', '.btn.success', function () {
+  const textId = $(this).closest('.text-card').data('textId')
+  const textObj = textsCrud.getByTextId(textId)
+  textObj.generateReviewDate(true)
+  textsCrud.persistTexts()
+  textsCrud.initLoad()
+}).on('click', '.btn.failure', function () {
+  const textId = $(this).closest('.text-card').data('textId')
+  const textObj = textsCrud.getByTextId(textId)
+  textObj.generateReviewDate(false)
+  textsCrud.persistTexts()
+  textsCrud.initLoad()
+}).on('click', '#text-add .btn-primary', function addNewText (e) {
   let $title = $('#text-add-title')
   let $text = $('#text-add-text')
   var newTextObj = new textObj.TextObj($title.val(), $text.val())
@@ -55,17 +82,7 @@ $(document).on('click', '#text-add .btn-primary', function addNewText (e) {
   $(e.target).closest('.modal').modal('hide')
 })
 
-$('#text-edit').on('show.bs.modal', function (event) {
-  var modal = $(this)
-  var button = $(event.relatedTarget)
-  var textId = button.data('textId')
-  var textObj = textsCrud.getByTextId(textId)
-
-  modal.find('#text-edit-title').val(textObj.title)
-  modal.find('#text-edit-text').val(textObj.text)
-  modal.data('textId', textId)
-})
-
+// typing mechanics TODO move to typingMechanics where it obviously belongs...
 typingMechanics.$output
   .on('keypress', typingMechanics.keyboardInput)
   .on('keydown', function (e) {

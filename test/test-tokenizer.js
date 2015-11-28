@@ -7,12 +7,7 @@ const test = require('tape')
 const jsRoot = '../src/js'
 const tokenizer = require(jsRoot + '/utils/tokenizer.js')
 
-test('does it work', function testTest (t) {
-  t.plan(1)
-  t.ok(tokenizer.test())
-})
-
-test('basic tests', function timingTest (t) {
+test('tokenizer--basic tests', function timingTest (t) {
   t.plan(1)
 
   const text1 = 'There is therefore now no condemnation'
@@ -42,7 +37,7 @@ test('basic tests', function timingTest (t) {
   t.deepEqual(output1, expected1, 'Simple string should parse correctly')
 })
 
-test('Messy whitespace and punctuation', function (t) {
+test('tokenizer--Messy whitespace and punctuation', function (t) {
   t.plan(7)
 
   const text = "I'm all  kinds,. of (messed) !!UP!!  "
@@ -78,7 +73,7 @@ test('Messy whitespace and punctuation', function (t) {
   t.equal(output[5].pos, text.indexOf('UP'))
 })
 
-test('dashes are a pain', function (t) {
+test('tokenizer--dashes are a pain', function (t) {
   t.plan(3)
 
   const text = 'hyphenated-words no not--absolutely--agree with us'
