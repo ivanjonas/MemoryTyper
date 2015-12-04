@@ -12,8 +12,8 @@ const cardDom = '' + // TODO use Polymer element here
   '</div>' +
   '<div class="card-feedback">' +
   '<div class="flexcontainer">' +
-  '<div class="btn success"><span class="glyphicon glyphicon-ok"></span></div>' +
-  '<div class="btn failure"><span class="glyphicon glyphicon-remove"></span></div>' +
+  '<div class="btn success" data-toggle="tooltip" data-placement="right" title=""><span class="glyphicon glyphicon-ok"></span></div>' +
+  '<div class="btn failure" data-toggle="tooltip" data-placement="right" title=""><span class="glyphicon glyphicon-remove"></span></div>' +
   '</div></div>' +
   '<div class="card-menu-container">' +
   '<span class="glyphicon glyphicon-cog card-menu"></span>' +
@@ -53,7 +53,30 @@ module.exports = {
     card.data('textId', textObj.id)
     if (textObj.reviews.dueDate <= (new Date()).getTime()) {
       card.addClass('due')
+      card.find('.btn.success').prop('title', 'You remember this text! It will be due again on ' +
+        simpleDateString(textObj.generateReviewDate(true)))
+      const failureButton = card.find('.btn.failure')
+      failureButton.prop('title', 'You cannot completely recall this text. The due date progression will be reset.')
+      if (textObj.reviews.continuousSuccesses === 0) {
+        failureButton.hide()
+      }
     }
     return card
   }
+}
+
+/**
+ * Takes a Date object and returns it as a string of the form 'Weekday Month Day'. For example,
+ * - Friday, December 4
+ * - Tuesday, January 12
+ *
+ * The year is omitted because the date passed in is expected to be in the near future. The year can be inferred easily.
+ * @param date
+ * @return {string} a human-readable representation of the date
+ */
+function simpleDateString (date) {
+  const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+    'November', 'December']
+  return weekdays[date.getDay()] + ' ' + months[date.getMonth()] + ' ' + date.getDate()
 }

@@ -22,6 +22,7 @@ module.exports = {
       var card = domManipulation.generateCard(el)
       $cardListContainer.append(card)
     })
+    $('[data-toggle="tooltip"]').tooltip()
   },
   loadText: function loadText (textObj) {
     if (typeof textObj === 'number') {

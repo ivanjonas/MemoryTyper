@@ -52,15 +52,17 @@ $(document).on('click', '.text-card', function loadCard (e) {
 }).on('click', '.btn.success', function () {
   const textId = $(this).closest('.text-card').data('textId')
   const textObj = textsCrud.getByTextId(textId)
-  textObj.generateReviewDate(true)
+  textObj.completeReview(true)
   textsCrud.persistTexts()
   textsCrud.initLoad()
+  return false
 }).on('click', '.btn.failure', function () {
   const textId = $(this).closest('.text-card').data('textId')
   const textObj = textsCrud.getByTextId(textId)
-  textObj.generateReviewDate(false)
+  textObj.completeReview(false)
   textsCrud.persistTexts()
   textsCrud.initLoad()
+  return false
 }).on('click', '#text-add .btn-primary', function addNewText (e) {
   let $title = $('#text-add-title')
   let $text = $('#text-add-text')
