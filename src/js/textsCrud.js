@@ -3,7 +3,7 @@
 let typingMechanics = require('./typingMechanics')
 const domManipulation = require('./utils/domManipulation')
 const timer = require('./timer')
-const lev = require('./vendor/fast-levenshtein')
+const lev = require('fast-levenshtein')
 const TextObj = require('./textObj').TextObj
 let texts = loadTextObjectsFromStorage() // an array of textObjs
 
