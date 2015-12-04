@@ -4,7 +4,7 @@
 'use strict'
 
 const parseErrorMessage = 'String not formatted to semver specifications'
-const updaters = [to0_3_0, to0_3_1()] // array because order matters
+const updaters = [to0_3_0, to0_3_1] // array because order matters
 
 exports.isGreater = isVersionGreater
 exports.updateData = update
