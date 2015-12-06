@@ -4,7 +4,6 @@ let textsCrud = require('./textsCrud')
 const domManipulation = require('./utils/domManipulation')
 const blurmode = require('./mode-blur')
 const wordmode = require('./mode-word')
-const timer = require('./timer')
 const textObj = require('./textObj')
 const semver = require('./utils/semver')
 let typingMechanics = require('./typingMechanics')
@@ -86,44 +85,8 @@ $(document).on('click', '.text-card', function loadCard (e) {
 
 // typing mechanics TODO move to typingMechanics where it obviously belongs...
 typingMechanics.$output
-  .on('keypress', typingMechanics.keyboardInput)
-  .on('keydown', function (e) {
-    if (!timer.isRunning()) {
-      return
-    }
-
-    var key = e.keyCode || e.which
-    if (key === 8 || key === 46) { // backspace or delete
-      const $output = $('.output')
-      const outputVal = $output.val()
-      let textAfterEdit
-      let selectionEnd = $output.get(0).selectionEnd
-      let selectionStart = $output.get(0).selectionStart
-      if (key === 8) {
-        // backspace
-        if (!e.ctrlKey) {
-          textAfterEdit = outputVal.slice(0, Math.max(selectionStart - 1, 0)) + outputVal.slice(selectionEnd)
-        } else {
-          // backspace the entire last "word"
-          const substring = outputVal.slice(0, $output.get(0).selectionStart)
-          const cutAtIndex = substring.lastIndexOf(substring.match(/(\b\w+)/g).pop())
-          textAfterEdit = substring.slice(0, cutAtIndex)
-        }
-      } else {
-        // delete
-        textAfterEdit = outputVal.slice(0, selectionStart) + outputVal.slice(selectionEnd + 1)
-        // technically this should also check for control, but probably won't happen.
-        // TODO put a logger statement here to let me know if it ever actually happens.
-      }
-      const match = typingMechanics.textObj.text.substr(0, textAfterEdit.length) === textAfterEdit
-
-      if (match) {
-        $output.removeClass('wrong').addClass('correct')
-      } else {
-        $output.removeClass('correct').addClass('wrong')
-      }
-    }
-  })
+  .on('keypress', typingMechanics.keypressHandler)
+  .on('keydown', typingMechanics.keydownHandler)
 
 $('input[type=checkbox].option').on('change', function updateOptions () {
   var optionKey = this.id.replace('option-', '')
