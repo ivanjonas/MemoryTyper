@@ -210,12 +210,12 @@ textarea.output {
   margin-top: .4em;
 }
 
-textarea.text.correct {
+textarea.output.correct {
   border: 1px solid green;
   background-color: rgba(178, 204, 176, 1);
 }
 
-textarea.text.wrong {
+textarea.output.wrong {
   border: 1px solid red;
   background-color: rgba(225, 187, 192, 1);
 }
