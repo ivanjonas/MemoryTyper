@@ -1,6 +1,7 @@
 /**
  * Created by jonasninja on 12/8/2015.
  */
+'use strict'
 
 const textsCrud = require('./textsCrud')
 const textObj = require('./textObj')

@@ -1,8 +1,9 @@
 /**
  * Created by jonasninja on 12/8/2015.
  */
+'use strict'
 
-let textsCrud = require('./textsCrud')
+const textsCrud = require('./textsCrud')
 
 module.exports.successfulReviewHandler = function () {
   const textId = $(this).closest('.text-card').data('textId')
