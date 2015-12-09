@@ -36,22 +36,9 @@ $(document).on('click', 'button.mode-word', wordmode.start)
   .on('click', '#mode-word button.sentence', wordmode.revealSentence)
   .on('click', '#mode-word button.reset', wordmode.reset)
 
-// loading, adding and editing texts
-$(document).on('click', '.text-card', function loadCard (e) {
-  textsCrud.loadText(parseInt($(this).data('textId'), 10))
-})
-
-$(document).on('click', '.text-card .card-menu', function (e) {
-  const modal = $('#text-edit').modal()
-  const textId = $(this).closest('.text-card').data('textId')
-  const textObj = textsCrud.getByTextId(textId)
-
-  modal.find('#text-edit-title').val(textObj.title)
-  modal.find('#text-edit-text').val(textObj.text)
-  modal.data('textId', textId)
-
-  e.stopPropagation()
-})
+  // loading, adding and editing texts
+  .on('click', '.text-card', textsCrud.loadCardHandler)
+  .on('click', '.text-card .card-menu', textsCrud.openCardMenuHandler)
 
   .on('click', '.btn.success', review.successfulReviewHandler)
   .on('click', '.btn.failure', review.failedReviewHandler)
