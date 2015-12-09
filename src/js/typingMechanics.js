@@ -3,6 +3,7 @@
  */
 'use strict'
 
+const domManipulation = require('./utils/domManipulation')
 const timer = require('./timer')
 let settings = require('./settings')
 const equivalencies = [
@@ -16,7 +17,8 @@ module.exports = {
   textObj: textObj,
   $output: $('.output'),
   keypressHandler: keypressHandler,
-  keydownHandler: keydownHandler
+  keydownHandler: keydownHandler,
+  start: start
 }
 
 /**
@@ -196,5 +198,14 @@ function keydownHandler (event) {
     } else {
       $output.removeClass('correct').addClass('wrong')
     }
+  }
+}
+
+function start (e) {
+  e.preventDefault()
+  if ($('.text').is(':visible')) {
+    domManipulation.hideText()
+  } else {
+    domManipulation.revealText()
   }
 }

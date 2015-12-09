@@ -18,14 +18,8 @@ $('.text').fixHeight()
 $('.output').focus()
 
 // interacting with practice modes
-$(document).on('click', 'button.mode-typing', function (e) {
-  e.preventDefault()
-  if ($('.text').is(':visible')) {
-    domManipulation.hideText()
-  } else {
-    domManipulation.revealText()
-  }
-}).on('click', 'button.mode-blur', blurmode.start)
+$(document).on('click', 'button.mode-typing', typingMechanics.start)
+  .on('click', 'button.mode-blur', blurmode.start)
   .on('click', '#mode-blur button.blur', blurmode.blur)
   .on('click', '#mode-blur button.back', blurmode.back)
   .on('click', '#mode-blur .blurrable.blurred', blurmode.toggleBlur)
