@@ -1,10 +1,10 @@
 'use strict'
 
-let textsCrud = require('./textsCrud')
+const textsCrud = require('./textsCrud')
 const domManipulation = require('./utils/domManipulation')
 const blurmode = require('./mode-blur')
 const wordmode = require('./mode-word')
-const textObj = require('./textObj')
+const modals = require('./modals')
 const semver = require('./utils/semver')
 let typingMechanics = require('./typingMechanics')
 let settings = require('./settings')
@@ -62,26 +62,9 @@ $(document).on('click', '.text-card', function loadCard (e) {
   textsCrud.persistTexts()
   textsCrud.initLoad()
   return false
-}).on('click', '#text-add .btn-primary', function addNewText (e) {
-  let $title = $('#text-add-title')
-  let $text = $('#text-add-text')
-  var newTextObj = new textObj.TextObj($title.val(), $text.val())
-  textsCrud.saveText(newTextObj)
-  textsCrud.initLoad()
-  $title.val('')
-  $text.val('')
-  $(e.target).closest('.modal').modal('hide')
-}).on('click', '#text-edit .btn-primary', function editExistingText (e) {
-  var textId = $(e.target).closest('.modal').data('textId')
-  textsCrud.editText(textId, $('#text-edit-title').val(), $('#text-edit-text').val())
-  textsCrud.initLoad()
-  $(e.target).closest('.modal').modal('hide')
-}).on('click', '#text-edit .btn-warning', function deleteExistingText (e) {
-  // TODO "are you sure?" Needs custom code for multiple Bootstrap modals
-  textsCrud.deleteText($(e.target).closest('.modal').data('textId'))
-  textsCrud.initLoad()
-  $(e.target).closest('.modal').modal('hide')
-})
+}).on('click', '#text-add .btn-primary', modals.addNewText)
+  .on('click', '#text-edit .btn-primary', modals.editExistingText)
+  .on('click', '#text-edit .btn-warning', modals.deleteExistingText)
 
 // typing mechanics TODO move to typingMechanics where it obviously belongs...
 typingMechanics.$output
