@@ -6,6 +6,7 @@ const blurmode = require('./mode-blur')
 const wordmode = require('./mode-word')
 const modals = require('./modals')
 const semver = require('./utils/semver')
+const review = require('./review')
 let typingMechanics = require('./typingMechanics')
 let settings = require('./settings')
 
@@ -38,7 +39,9 @@ $(document).on('click', 'button.mode-word', wordmode.start)
 // loading, adding and editing texts
 $(document).on('click', '.text-card', function loadCard (e) {
   textsCrud.loadText(parseInt($(this).data('textId'), 10))
-}).on('click', '.text-card .card-menu', function (e) {
+})
+
+$(document).on('click', '.text-card .card-menu', function (e) {
   const modal = $('#text-edit').modal()
   const textId = $(this).closest('.text-card').data('textId')
   const textObj = textsCrud.getByTextId(textId)
@@ -48,21 +51,12 @@ $(document).on('click', '.text-card', function loadCard (e) {
   modal.data('textId', textId)
 
   e.stopPropagation()
-}).on('click', '.btn.success', function () {
-  const textId = $(this).closest('.text-card').data('textId')
-  const textObj = textsCrud.getByTextId(textId)
-  textObj.completeReview(true)
-  textsCrud.persistTexts()
-  textsCrud.initLoad()
-  return false
-}).on('click', '.btn.failure', function () {
-  const textId = $(this).closest('.text-card').data('textId')
-  const textObj = textsCrud.getByTextId(textId)
-  textObj.completeReview(false)
-  textsCrud.persistTexts()
-  textsCrud.initLoad()
-  return false
-}).on('click', '#text-add .btn-primary', modals.addNewText)
+})
+
+  .on('click', '.btn.success', review.successfulReviewHandler)
+  .on('click', '.btn.failure', review.failedReviewHandler)
+
+  .on('click', '#text-add .btn-primary', modals.addNewText)
   .on('click', '#text-edit .btn-primary', modals.editExistingText)
   .on('click', '#text-edit .btn-warning', modals.deleteExistingText)
 
