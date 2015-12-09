@@ -52,10 +52,7 @@ typingMechanics.$output
   .on('keypress', typingMechanics.keypressHandler)
   .on('keydown', typingMechanics.keydownHandler)
 
-$('input[type=checkbox].option').on('change', function updateOptions () {
-  var optionKey = this.id.replace('option-', '')
-  settings.set(optionKey, this.checked)
-})
+$('input[type=checkbox].option').on('change', settings.updateOptionsHandler)
 
 $(window).resize(function windowResize () {
   $('.text').fixHeight()

@@ -23,6 +23,7 @@ const __setFunctions = {
 module.exports = {
   typingOptions: typingOptions,
   loadUserSettings: loadUserSettings,
+  updateOptionsHandler: updateOptionsHandler,
   getRequireCapitalization: getRequireCapitalization,
   getRequirePunctuation: getRequirePunctuation,
   getAllowWrongInput: getAllowWrongInput,
@@ -42,6 +43,11 @@ function loadUserSettings () {
     }
   }
   domManipulation.setUserSettings(typingOptions)
+}
+
+function updateOptionsHandler () {
+  var optionKey = this.id.replace('option-', '')
+  set(optionKey, this.checked)
 }
 
 function getRequireCapitalization () {
