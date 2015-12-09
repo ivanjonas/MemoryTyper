@@ -48,6 +48,4 @@ typingMechanics.$output
 
 $('input[type=checkbox].option').on('change', settings.updateOptionsHandler)
 
-$(window).resize(function windowResize () {
-  $('.text').fixHeight()
-})
+$(window).resize(domManipulation.windowResizeHandler)

@@ -62,7 +62,13 @@ module.exports = {
       }
     }
     return card
-  }
+  },
+
+  windowResizeHandler: windowResizeHandler
+}
+
+function windowResizeHandler () {
+  $('.text').fixHeight()
 }
 
 /**
