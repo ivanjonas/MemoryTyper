@@ -38,7 +38,7 @@ function initLoad () {
 
 function loadText (textObj) {
   if (typeof textObj === 'number') {
-    textObj = this.getByTextId(textObj)
+    textObj = getByTextId(textObj)
   }
   typingMechanics.textObj = textObj
   $('#activity-area').data('textObj', textObj)
@@ -55,12 +55,12 @@ function saveText (textObj) {
     texts = []
   }
   texts.push(textObj)
-  this.persistTexts()
+  persistTexts()
   module.exports.loadText(textObj)
 }
 
 function editText (textId, newTitle, newText) {
-  var textObj = this.getByTextId(textId)
+  var textObj = getByTextId(textId)
   var distance = lev.get(textObj.text.toLowerCase(), newText.toLowerCase())
 
   if (distance > 30) { // an arbitrary number
@@ -71,7 +71,7 @@ function editText (textId, newTitle, newText) {
 
   textObj.text = newText
   textObj.title = newTitle
-  this.persistTexts()
+  persistTexts()
 
   // update .text if this text is loaded in it
   if (typingMechanics.textObj !== undefined && typingMechanics.textObj.id === textId) {
@@ -83,7 +83,7 @@ function deleteText (textId) {
   texts = texts.filter(function (el) {
     return el.id !== textId
   })
-  this.persistTexts()
+  persistTexts()
 
   // clear .text if this text is loaded in it
   if (typingMechanics.textObj !== undefined && typingMechanics.textObj.id === textId) {
