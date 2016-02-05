@@ -28,12 +28,15 @@ function TextObj (title, text, successes) {
   dueDate.setHours(0)
 
   this.reviews = {
-    successes: 0,
+    successes: successes,
     continuousSuccesses: successes || 0,
     failures: 0,
     lastSuccess: null,
     lastFailure: null,
     dueDate: dueDate.getTime()
+  }
+  if (successes) {
+    this.reviews.dueDate = getNextDate(this.reviews)
   }
 }
 

@@ -177,6 +177,15 @@ h1 {
   margin-top: 6px;
 }
 
+/* modals */
+#text-add-reviewcount {
+  width: 40px;
+}
+
+.reviewcount-help {
+  display: block;
+}
+
 /* menu button to modify a text */
 .text-card .card-menu-container {
   position: absolute;

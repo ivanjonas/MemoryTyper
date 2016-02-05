@@ -40,6 +40,7 @@ $(document).on('click', 'button.mode-word', wordmode.start)
   .on('click', '#text-add .btn-primary', modals.addNewText)
   .on('click', '#text-edit .btn-primary', modals.editExistingText)
   .on('click', '#text-edit .btn-warning', modals.deleteExistingText)
+  .on('change', '#text-add-reviewcount', modals.changeFirstReview)
 
 // typing mechanics TODO move to typingMechanics where it obviously belongs...
 typingMechanics.$output

@@ -60,6 +60,8 @@ module.exports = {
       if (textObj.reviews.continuousSuccesses === 0) {
         failureButton.hide()
       }
+    } else {
+      card.prop('title', 'this card is due on ' + (new Date(textObj.reviews.dueDate)).toUTCString().substr(0, 11))
     }
     return card
   },
