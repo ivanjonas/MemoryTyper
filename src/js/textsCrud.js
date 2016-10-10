@@ -113,14 +113,15 @@ function getByTextId (textId) {
  * See http://nullprogram.com/blog/2013/03/11/
  */
 function loadTextObjectsFromStorage () {
-  let objs = JSON.parse(window.localStorage.getItem('texts'))
-  for (let obj of objs) {
+  var obj
+  let objs = JSON.parse(window.localStorage.getItem('texts')) || []
+  for (obj of objs) {
     Object.setPrototypeOf(obj, TextObj.prototype)
   }
   return objs
 }
 
-function loadCardHandler (e) {
+function loadCardHandler () {
   loadText(parseInt($(this).data('textId'), 10))
 }
 

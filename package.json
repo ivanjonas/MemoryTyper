@@ -41,6 +41,7 @@
     "test": "test"
   },
   "scripts": {
+    "postinstall": "mkdir dist && cd dist && mkdir js && cd ..",
     "open:dev": "opener http://localhost:9090",
     "pretest": "standard",
     "test": "tape test/*.js | faucet",

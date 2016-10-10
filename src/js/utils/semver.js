@@ -15,13 +15,15 @@ exports.updateData = update
  * @param second the base semver string to which the first is compared.
  */
 function isVersionGreater (first, second) {
+  var partsSecond
+  var result
   const partsFirst = parse(first)
   if (second == null) {
     return true
   }
-  const partsSecond = parse(second)
+  partsSecond = parse(second)
 
-  let result = false
+  result = false
 
   if (partsFirst.major !== partsSecond.major) {
     result = partsFirst.major > partsSecond.major
@@ -69,7 +71,7 @@ function to0_3_0 () {
   // updates old data to the format required by 0.3.0
   console.log('updating data to 0.3.0 format')
 
-  let texts = JSON.parse(window.localStorage.getItem('texts')) // an array of textObjs
+  let texts = JSON.parse(window.localStorage.getItem('texts')) || [] // an array of textObjs
   for (let text of texts) {
     let due = new Date()
     due.setMilliseconds(0)
@@ -96,7 +98,7 @@ function to0_3_1 () {
   // removes obsoleted review metadata that was introduced in 0.3.0
   console.log('updating data to 0.3.1 format')
 
-  let texts = JSON.parse(window.localStorage.getItem('texts')) // an array of textObjs
+  let texts = JSON.parse(window.localStorage.getItem('texts')) || [] // an array of textObjs
   for (let text of texts) delete text.reviews.lastResult
 
   window.localStorage.setItem('texts', JSON.stringify(texts))
